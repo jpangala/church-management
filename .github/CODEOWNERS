@@ -1,0 +1,43 @@
+# Code owners are requested for review automatically, and are required
+# reviewers on protected branches.
+#
+# Until the other three collaborators join, everything is owned by the lead.
+# As each person is onboarded, uncomment their slice below and remove the
+# corresponding coverage from the catch-all.
+
+# Catch-all
+*                                   @jpangala
+
+# ── Cross-cutting: always lead review, regardless of who owns the slice ──
+/.github/                           @jpangala
+/packages/shared/                   @jpangala
+/apps/api/src/common/               @jpangala
+/apps/api/prisma/schema.prisma      @jpangala
+/apps/web/src/components/shared/    @jpangala
+/apps/web/src/lib/                  @jpangala
+/eslint.config.mjs                  @jpangala
+
+# ── Domain slices (uncomment as collaborators join) ──────────────────────
+# Identity & Access
+# /apps/api/src/modules/auth/       @dev-identity
+# /apps/api/src/modules/users/      @dev-identity
+# /apps/api/src/modules/divisions/  @dev-identity
+# /apps/api/src/modules/audit/      @dev-identity
+# /apps/web/src/features/admin/     @dev-identity
+
+# Members & Projects
+# /apps/api/src/modules/members/    @dev-members
+# /apps/api/src/modules/projects/   @dev-members
+# /apps/web/src/features/members/   @dev-members
+# /apps/web/src/features/projects/  @dev-members
+
+# Bookings & Assets
+# /apps/api/src/modules/bookings/   @dev-bookings
+# /apps/api/src/modules/rooms/      @dev-bookings
+# /apps/api/src/modules/items/      @dev-bookings
+# /apps/web/src/features/bookings/  @dev-bookings
+# /apps/web/src/features/assets/    @dev-bookings
+
+# Finance
+# /apps/api/src/modules/finance/    @dev-finance
+# /apps/web/src/features/finance/   @dev-finance
