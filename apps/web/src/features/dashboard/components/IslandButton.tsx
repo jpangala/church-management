@@ -1,8 +1,7 @@
 import { forwardRef } from "react";
 import { ArrowUpRight } from "./icons";
 
-interface Props
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "ghost" | "soft";
   size?: "md" | "sm";
   trailingIcon?: React.ReactNode | null;
@@ -48,7 +47,9 @@ const IslandButton = forwardRef<HTMLButtonElement, Props>(function IslandButton(
   ref,
 ) {
   const icon =
-    trailingIcon === null ? null : trailingIcon ?? <ArrowUpRight width={14} height={14} />;
+    trailingIcon === null
+      ? null
+      : (trailingIcon ?? <ArrowUpRight width={14} height={14} />);
 
   return (
     <button

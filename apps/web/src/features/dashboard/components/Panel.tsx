@@ -14,7 +14,13 @@ interface Props {
  * Use for every primary card / panel / chart in the dashboard.
  */
 const Panel = forwardRef<HTMLDivElement, Props>(function Panel(
-  { children, className = "", inset = "p-7 sm:p-8", tone = "surface", as = "section" },
+  {
+    children,
+    className = "",
+    inset = "p-7 sm:p-8",
+    tone = "surface",
+    as = "section",
+  },
   ref,
 ) {
   const Tag = as as keyof JSX.IntrinsicElements;

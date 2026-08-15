@@ -171,11 +171,13 @@ export default function DivisionDashboard() {
               .
             </h1>
             <p className="mt-5 max-w-xl text-[15px] leading-relaxed text-muted-foreground text-pretty">
-              Tiga booking ruangan menunggu persetujuan dan satu proyek
-              Natal mendekati 65% progress. Tim siap rapat malam ini.
+              Tiga booking ruangan menunggu persetujuan dan satu proyek Natal
+              mendekati 65% progress. Tim siap rapat malam ini.
             </p>
             <div className="mt-7 flex flex-wrap items-center gap-3">
-              <IslandButton variant="primary">Lihat Booking Pending</IslandButton>
+              <IslandButton variant="primary">
+                Lihat Booking Pending
+              </IslandButton>
               <IslandButton variant="soft" trailingIcon={null}>
                 Tambah Anggota
               </IslandButton>
@@ -249,10 +251,7 @@ export default function DivisionDashboard() {
 
           <ul className="-mx-2 mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2">
             {PROJECTS.map((p, i) => (
-              <li
-                key={p.title}
-                className="snap-start shrink-0 basis-[19rem]"
-              >
+              <li key={p.title} className="snap-start shrink-0 basis-[19rem]">
                 <div className="rounded-[1.5rem] bg-foreground/[0.035] p-[5px] ring-1 ring-inset ring-foreground/[0.05] shadow-soft-lift transition-transform duration-700 ease-spring-soft hover:-translate-y-1">
                   <div className="rounded-[calc(1.5rem-5px)] bg-surface p-5 shadow-inner-hairline">
                     <div className="flex items-start justify-between gap-3">
@@ -306,7 +305,7 @@ export default function DivisionDashboard() {
                                 background: `hsl(${(i * 73 + k * 41) % 360}, 38%, 38%)`,
                               }}
                             >
-                              {String.fromCharCode(65 + (k + i) % 26)}
+                              {String.fromCharCode(65 + ((k + i) % 26))}
                             </span>
                           ),
                         )}

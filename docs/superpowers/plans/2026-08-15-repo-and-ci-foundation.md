@@ -18,31 +18,31 @@
 
 Files created or modified by this plan, and what each is responsible for:
 
-| File | Responsibility |
-|---|---|
-| `.gitignore` (modify) | Exclude generated output that is currently untracked-but-present |
-| `.nvmrc` (create) | Pin Node 22 for CI and all four machines |
-| `.editorconfig` (create) | Editor-level whitespace consistency |
-| `.prettierrc` (create) | Formatting rules — one source of truth |
-| `.prettierignore` (create) | Keep Prettier off generated and vendored files |
-| `eslint.config.mjs` (create) | Base lint rules **and** the architectural boundary rules |
-| `package.json` (modify) | Root scripts (`lint`, `test`, `format`), `engines` |
-| `apps/api/package.json` (modify) | `test` script; drop app-level `lint` |
-| `apps/web/package.json` (modify) | `test` script; drop app-level `lint` |
-| `apps/api/tsconfig.build.json` (create) | Keep `*.spec.ts` out of the deployed `dist/` |
-| `apps/api/nest-cli.json` (modify) | Point `nest build` at `tsconfig.build.json` |
-| `apps/api/vitest.config.ts` (create) | API test runner |
-| `apps/web/vitest.config.ts` (create) | Web test runner |
-| `apps/api/prisma/resolve-admin-password.ts` (create) | Testable seed-password resolution |
-| `apps/api/prisma/resolve-admin-password.spec.ts` (create) | Its tests |
-| `apps/api/prisma/seed.ts` (modify) | Stop hardcoding the admin password before going public |
-| `apps/web/src/lib/utils.spec.ts` (create) | Proves the web runner works; covers IDR formatting |
-| `.github/workflows/ci.yml` (create) | The `verify` job — the required status check |
-| `.github/CODEOWNERS` (create) | Ownership + auto-requested review |
-| `.github/pull_request_template.md` (create) | PR checklist |
-| `CONTRIBUTING.md` (create) | Branch naming, commit format, where new files go |
-| `README.md` (modify) | Correct setup steps (brew Postgres, port 5175, Node 22) |
-| `docs/PROGRESS.md` (modify) | Record the commit-convention change and Phase 2 status |
+| File                                                      | Responsibility                                                   |
+| --------------------------------------------------------- | ---------------------------------------------------------------- |
+| `.gitignore` (modify)                                     | Exclude generated output that is currently untracked-but-present |
+| `.nvmrc` (create)                                         | Pin Node 22 for CI and all four machines                         |
+| `.editorconfig` (create)                                  | Editor-level whitespace consistency                              |
+| `.prettierrc` (create)                                    | Formatting rules — one source of truth                           |
+| `.prettierignore` (create)                                | Keep Prettier off generated and vendored files                   |
+| `eslint.config.mjs` (create)                              | Base lint rules **and** the architectural boundary rules         |
+| `package.json` (modify)                                   | Root scripts (`lint`, `test`, `format`), `engines`               |
+| `apps/api/package.json` (modify)                          | `test` script; drop app-level `lint`                             |
+| `apps/web/package.json` (modify)                          | `test` script; drop app-level `lint`                             |
+| `apps/api/tsconfig.build.json` (create)                   | Keep `*.spec.ts` out of the deployed `dist/`                     |
+| `apps/api/nest-cli.json` (modify)                         | Point `nest build` at `tsconfig.build.json`                      |
+| `apps/api/vitest.config.ts` (create)                      | API test runner                                                  |
+| `apps/web/vitest.config.ts` (create)                      | Web test runner                                                  |
+| `apps/api/prisma/resolve-admin-password.ts` (create)      | Testable seed-password resolution                                |
+| `apps/api/prisma/resolve-admin-password.spec.ts` (create) | Its tests                                                        |
+| `apps/api/prisma/seed.ts` (modify)                        | Stop hardcoding the admin password before going public           |
+| `apps/web/src/lib/utils.spec.ts` (create)                 | Proves the web runner works; covers IDR formatting               |
+| `.github/workflows/ci.yml` (create)                       | The `verify` job — the required status check                     |
+| `.github/CODEOWNERS` (create)                             | Ownership + auto-requested review                                |
+| `.github/pull_request_template.md` (create)               | PR checklist                                                     |
+| `CONTRIBUTING.md` (create)                                | Branch naming, commit format, where new files go                 |
+| `README.md` (modify)                                      | Correct setup steps (brew Postgres, port 5175, Node 22)          |
+| `docs/PROGRESS.md` (modify)                               | Record the commit-convention change and Phase 2 status           |
 
 **Why `eslint.config.mjs` and not `eslint.config.js`** (the spec says `.js`): the root `package.json` has no `"type": "module"`, so a `.js` config would be parsed as CommonJS while the config itself uses ESM `import` syntax. `.mjs` is unambiguous. This is the only deviation from the spec in this plan.
 
@@ -51,16 +51,19 @@ Files created or modified by this plan, and what each is responsible for:
 ## Task 1: Git bootstrap and secret audit
 
 **Files:**
+
 - Modify: `.gitignore`
 
-> **Safety gate.** This repository becomes public in Task 13. `apps/api/.env` and `apps/web/.env` contain real JWT secrets. A secret that reaches a public commit must be *rotated*, not deleted. Do not skip step 3.
+> **Safety gate.** This repository becomes public in Task 13. `apps/api/.env` and `apps/web/.env` contain real JWT secrets. A secret that reaches a public commit must be _rotated_, not deleted. Do not skip step 3.
 
 - [ ] **Step 1: Confirm you are in the right directory and there is no repo yet**
 
 Run:
+
 ```bash
 cd "/Users/jpangala/Project/Church Management Project" && pwd && ls -d .git 2>/dev/null || echo "NO GIT REPO - correct starting state"
 ```
+
 Expected: prints the project path, then `NO GIT REPO - correct starting state`.
 
 - [ ] **Step 2: Add the missing ignore entries**
@@ -80,9 +83,11 @@ graphify-out/
 - [ ] **Step 3: Initialise the repo and audit what would be committed**
 
 Run:
+
 ```bash
 git init -b main && git add -A && git diff --cached --name-only | grep -E '(^|/)\.env$' && echo "!!! STOP: .env IS STAGED !!!" || echo "OK: no .env files staged"
 ```
+
 Expected: `OK: no .env files staged`.
 
 If it prints `!!! STOP !!!`, run `git rm --cached apps/api/.env apps/web/.env`, confirm `.gitignore` contains `.env`, and re-run this step before continuing.
@@ -90,17 +95,21 @@ If it prints `!!! STOP !!!`, run `git rm --cached apps/api/.env apps/web/.env`, 
 - [ ] **Step 4: Confirm the generated files are excluded too**
 
 Run:
+
 ```bash
 git diff --cached --name-only | grep -E 'vite\.config\.(js|d\.ts)|graphify-out|tsbuildinfo|node_modules' && echo "!!! STOP: generated files staged !!!" || echo "OK: no generated files staged"
 ```
+
 Expected: `OK: no generated files staged`.
 
 - [ ] **Step 5: Review the file list once by eye**
 
 Run:
+
 ```bash
 git diff --cached --name-only | wc -l && git diff --cached --name-only | head -60
 ```
+
 Expected: roughly 70–90 files, all of them source, config, docs, or `.env.example`. No `.env`, no `node_modules`, no `dist`.
 
 - [ ] **Step 6: Commit**
@@ -114,6 +123,7 @@ git commit -m "chore: initial commit of church management monorepo"
 ## Task 2: Pin the Node version
 
 **Files:**
+
 - Create: `.nvmrc`
 - Create: `.editorconfig`
 - Modify: `package.json`
@@ -160,9 +170,11 @@ In `package.json`, add an `engines` block immediately after the `"packageManager
 - [ ] **Step 4: Verify the constraint is real**
 
 Run:
+
 ```bash
 node -p "require('./package.json').engines.node"
 ```
+
 Expected: `>=22 <23`
 
 Note: if your local Node is v26, `pnpm install` will now warn. Switch with `nvm use` (which reads `.nvmrc`) or `nvm install 22`. CI uses `.nvmrc` and will always be on 22.
@@ -179,6 +191,7 @@ git commit -m "chore: pin node 22 lts and add editorconfig"
 ## Task 3: Prettier
 
 **Files:**
+
 - Create: `.prettierrc`
 - Create: `.prettierignore`
 - Modify: `package.json`
@@ -186,9 +199,11 @@ git commit -m "chore: pin node 22 lts and add editorconfig"
 - [ ] **Step 1: Install Prettier at the workspace root**
 
 Run:
+
 ```bash
 pnpm add -Dw prettier@^3.3.0
 ```
+
 Expected: adds `prettier` to root `devDependencies`.
 
 - [ ] **Step 2: Create `.prettierrc`**
@@ -232,14 +247,17 @@ Add to the `"scripts"` block:
 - [ ] **Step 5: Check what would change before changing it**
 
 Run:
+
 ```bash
 pnpm format:check
 ```
+
 Expected: FAIL, listing a handful of files. This is the "test fails first" step — it proves Prettier is actually reading your config.
 
 - [ ] **Step 6: Format the repository**
 
 Run:
+
 ```bash
 pnpm format
 ```
@@ -247,17 +265,21 @@ pnpm format
 - [ ] **Step 7: Verify it now passes**
 
 Run:
+
 ```bash
 pnpm format:check
 ```
+
 Expected: `All matched files use Prettier code style!`
 
 - [ ] **Step 8: Confirm nothing outside source was touched**
 
 Run:
+
 ```bash
 git status --porcelain | grep -vE '\.(ts|tsx|json|md|css|js|mjs|yml)$' || echo "OK: only source files changed"
 ```
+
 Expected: `OK: only source files changed`
 
 - [ ] **Step 9: Commit**
@@ -272,6 +294,7 @@ git commit -m "chore: add prettier config and format repository"
 ## Task 4: ESLint base configuration
 
 **Files:**
+
 - Create: `eslint.config.mjs`
 - Modify: `package.json`
 - Modify: `apps/api/package.json`
@@ -282,14 +305,17 @@ Context: `pnpm lint` is already wired into both apps but **fails today** — no 
 - [ ] **Step 1: Prove the current state is broken**
 
 Run:
+
 ```bash
 pnpm --filter api lint
 ```
+
 Expected: FAIL — ESLint reports it could not find a configuration file (or `eslint: command not found`). Either failure confirms the gap.
 
 - [ ] **Step 2: Install ESLint and plugins at the workspace root**
 
 Run:
+
 ```bash
 pnpm add -Dw eslint@^9.13.0 @eslint/js@^9.13.0 typescript-eslint@^8.11.0 eslint-plugin-react-hooks@^5.0.0 eslint-config-prettier@^9.1.0 globals@^15.11.0
 ```
@@ -374,17 +400,21 @@ Delete the `"lint"` line from `apps/api/package.json` (currently `"lint": "eslin
 - [ ] **Step 6: Run the linter**
 
 Run:
+
 ```bash
 pnpm lint
 ```
+
 Expected: PASS with no errors. If it reports `@typescript-eslint/no-unused-vars` or `no-undef` in existing source, fix those source files — do not weaken the config to hide them.
 
 - [ ] **Step 7: Confirm typecheck still passes**
 
 Run:
+
 ```bash
 pnpm --filter api prisma:generate && pnpm typecheck
 ```
+
 Expected: PASS. (`prisma generate` must run first — `@prisma/client` types do not exist until it does.)
 
 - [ ] **Step 8: Commit**
@@ -399,11 +429,12 @@ git commit -m "chore: add eslint 9 flat config at workspace root"
 ## Task 5: Architectural boundary rules
 
 **Files:**
+
 - Modify: `eslint.config.mjs`
 
 Context: this is the task that makes the design spec's boundaries enforceable. Each rule below corresponds to a rule in §6 and §8.2 of the spec.
 
-The relative-path patterns are depth-aware on purpose. A file directly inside a feature (`features/members/Page.tsx`) leaves its feature with a single `../`, while a file one level deeper (`features/members/components/Row.tsx`) uses `../` to reach its *own* feature and needs `../../` to escape. Banning `../*` at both depths would produce false positives on legitimate same-feature imports, so the two depths get separate blocks.
+The relative-path patterns are depth-aware on purpose. A file directly inside a feature (`features/members/Page.tsx`) leaves its feature with a single `../`, while a file one level deeper (`features/members/components/Row.tsx`) uses `../` to reach its _own_ feature and needs `../../` to escape. Banning `../*` at both depths would produce false positives on legitimate same-feature imports, so the two depths get separate blocks.
 
 - [ ] **Step 1: Add the boundary blocks to `eslint.config.mjs`**
 
@@ -557,9 +588,11 @@ export class ScratchController {
 ```
 
 Run:
+
 ```bash
 pnpm lint
 ```
+
 Expected: FAIL with `Controllers delegate to services. Data access belongs in *.service.ts.`
 
 - [ ] **Step 3: Prove the cross-feature rule fires**
@@ -573,9 +606,11 @@ export const scratch = PrivateRoute;
 ```
 
 Run:
+
 ```bash
 pnpm lint
 ```
+
 Expected: FAIL with `No cross-feature imports. Shared code belongs in @/components/shared or @church/shared.`
 
 - [ ] **Step 4: Prove there is no false positive on same-feature imports**
@@ -589,14 +624,17 @@ export const stillScratch = scratch;
 ```
 
 Run:
+
 ```bash
 pnpm lint 2>&1 | grep "scratch-ok" || echo "OK: same-feature relative import is allowed"
 ```
+
 Expected: `OK: same-feature relative import is allowed` — the file must produce no cross-feature error. (The `scratch.ts` error from Step 3 is still expected and unrelated.)
 
 - [ ] **Step 5: Remove all three throwaway files**
 
 Run:
+
 ```bash
 rm -f "apps/api/src/scratch.controller.ts" "apps/web/src/features/landing/scratch.ts" "apps/web/src/features/landing/components/scratch-ok.ts"
 ```
@@ -604,9 +642,11 @@ rm -f "apps/api/src/scratch.controller.ts" "apps/web/src/features/landing/scratc
 - [ ] **Step 6: Verify the repository is clean again**
 
 Run:
+
 ```bash
 pnpm lint
 ```
+
 Expected: PASS with no errors.
 
 - [ ] **Step 7: Commit**
@@ -621,6 +661,7 @@ git commit -m "chore(lint): enforce architecture boundaries via no-restricted-im
 ## Task 6: Vitest for the API, and stop shipping tests
 
 **Files:**
+
 - Create: `apps/api/tsconfig.build.json`
 - Modify: `apps/api/nest-cli.json`
 - Create: `apps/api/vitest.config.ts`
@@ -631,6 +672,7 @@ Context: `apps/api` has no `tsconfig.build.json`, so `nest build` compiles every
 - [ ] **Step 1: Install Vitest in the API package**
 
 Run:
+
 ```bash
 pnpm --filter api add -D vitest@^2.1.0
 ```
@@ -690,9 +732,11 @@ Add to `"scripts"` in `apps/api/package.json`:
 - [ ] **Step 6: Verify the runner starts and the build still works**
 
 Run:
+
 ```bash
 pnpm --filter api prisma:generate && pnpm --filter api test && pnpm --filter api build && ls apps/api/dist/main.js
 ```
+
 Expected: Vitest reports `No test files found` and exits 0; the build succeeds; `apps/api/dist/main.js` exists.
 
 Then confirm the build output is clean of tests (this is the whole point of `tsconfig.build.json`):
@@ -700,6 +744,7 @@ Then confirm the build output is clean of tests (this is the whole point of `tsc
 ```bash
 find apps/api/dist -name "*.spec.js" | grep . && echo "!!! specs are being shipped !!!" || echo "OK: no spec files in dist"
 ```
+
 Expected: `OK: no spec files in dist`
 
 - [ ] **Step 7: Commit**
@@ -714,6 +759,7 @@ git commit -m "chore(api): add vitest and keep spec files out of the build"
 ## Task 7: Harden the seed password (TDD)
 
 **Files:**
+
 - Create: `apps/api/prisma/resolve-admin-password.ts`
 - Create: `apps/api/prisma/resolve-admin-password.spec.ts`
 - Modify: `apps/api/prisma/seed.ts`
@@ -730,7 +776,9 @@ import { resolveAdminPassword } from "./resolve-admin-password";
 
 describe("resolveAdminPassword", () => {
   it("uses SEED_ADMIN_PASSWORD when it is set", () => {
-    const result = resolveAdminPassword({ SEED_ADMIN_PASSWORD: "s3cret-from-env" });
+    const result = resolveAdminPassword({
+      SEED_ADMIN_PASSWORD: "s3cret-from-env",
+    });
 
     expect(result.password).toBe("s3cret-from-env");
     expect(result.generated).toBe(false);
@@ -744,8 +792,12 @@ describe("resolveAdminPassword", () => {
   });
 
   it("generates a password when the variable is blank or whitespace", () => {
-    expect(resolveAdminPassword({ SEED_ADMIN_PASSWORD: "" }).generated).toBe(true);
-    expect(resolveAdminPassword({ SEED_ADMIN_PASSWORD: "   " }).generated).toBe(true);
+    expect(resolveAdminPassword({ SEED_ADMIN_PASSWORD: "" }).generated).toBe(
+      true,
+    );
+    expect(resolveAdminPassword({ SEED_ADMIN_PASSWORD: "   " }).generated).toBe(
+      true,
+    );
   });
 
   it("generates a different password on each call", () => {
@@ -760,9 +812,11 @@ describe("resolveAdminPassword", () => {
 - [ ] **Step 2: Run it and confirm it fails for the right reason**
 
 Run:
+
 ```bash
 pnpm --filter api test
 ```
+
 Expected: FAIL — `Failed to resolve import "./resolve-admin-password"`. The module does not exist yet.
 
 - [ ] **Step 3: Write the minimal implementation**
@@ -802,9 +856,11 @@ export function resolveAdminPassword(
 - [ ] **Step 4: Run the tests and confirm they pass**
 
 Run:
+
 ```bash
 pnpm --filter api test
 ```
+
 Expected: PASS — 4 tests in 1 file.
 
 - [ ] **Step 5: Wire it into the seed script**
@@ -819,9 +875,12 @@ import { resolveAdminPassword } from "./resolve-admin-password";
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminEmail = process.env.SEED_ADMIN_EMAIL?.trim() || "admin@church.local";
+  const adminEmail =
+    process.env.SEED_ADMIN_EMAIL?.trim() || "admin@church.local";
 
-  const existing = await prisma.user.findUnique({ where: { email: adminEmail } });
+  const existing = await prisma.user.findUnique({
+    where: { email: adminEmail },
+  });
   if (existing) {
     console.log(`[seed] admin already exists: ${adminEmail}`);
     return;
@@ -843,7 +902,9 @@ async function main() {
 
   if (generated) {
     console.log(`[seed] generated password: ${password}`);
-    console.log("[seed] This is shown ONCE. Save it now, then change it after first login.");
+    console.log(
+      "[seed] This is shown ONCE. Save it now, then change it after first login.",
+    );
   } else {
     console.log("[seed] password taken from SEED_ADMIN_PASSWORD.");
   }
@@ -873,9 +934,11 @@ SEED_ADMIN_EMAIL=admin@church.local
 - [ ] **Step 7: Verify lint, types and tests all still pass**
 
 Run:
+
 ```bash
 pnpm lint && pnpm typecheck && pnpm --filter api test
 ```
+
 Expected: all three PASS.
 
 - [ ] **Step 8: Commit**
@@ -890,6 +953,7 @@ git commit -m "feat(api): generate a random seed admin password instead of hardc
 ## Task 8: Vitest for the web app (TDD)
 
 **Files:**
+
 - Create: `apps/web/vitest.config.ts`
 - Create: `apps/web/src/lib/utils.spec.ts`
 - Modify: `apps/web/package.json`
@@ -901,6 +965,7 @@ The environment is `node`, not `jsdom`: nothing here touches the DOM. `jsdom` an
 - [ ] **Step 1: Install Vitest in the web package**
 
 Run:
+
 ```bash
 pnpm --filter web add -D vitest@^2.1.0
 ```
@@ -949,7 +1014,9 @@ describe("cn", () => {
   });
 
   it("drops falsy values", () => {
-    expect(cn("text-sm", false, undefined, "font-bold")).toBe("text-sm font-bold");
+    expect(cn("text-sm", false, undefined, "font-bold")).toBe(
+      "text-sm font-bold",
+    );
   });
 });
 
@@ -980,9 +1047,11 @@ These assert on substrings rather than the whole string on purpose: `Intl.Number
 - [ ] **Step 5: Run the tests**
 
 Run:
+
 ```bash
 pnpm --filter web test
 ```
+
 Expected: PASS — 6 tests in 1 file. (`cn` and `formatIDR` already exist in `src/lib/utils.ts`, so these pass immediately; they are characterisation tests that lock in current behaviour before four people start changing things.)
 
 - [ ] **Step 6: Add the root `test` script**
@@ -996,9 +1065,11 @@ Add to `"scripts"` in the root `package.json`:
 - [ ] **Step 7: Verify the whole suite runs from the root**
 
 Run:
+
 ```bash
 pnpm test
 ```
+
 Expected: both `api` and `web` run; 10 tests pass in total; `@church/shared` is skipped (it has no `test` script).
 
 - [ ] **Step 8: Commit**
@@ -1013,14 +1084,17 @@ git commit -m "test(web): add vitest and cover cn and formatIDR"
 ## Task 9: The CI workflow
 
 **Files:**
+
 - Create: `.github/workflows/ci.yml`
 
 - [ ] **Step 1: Verify every gate passes locally first**
 
 Run:
+
 ```bash
 pnpm install --frozen-lockfile && pnpm --filter api prisma:generate && pnpm lint && pnpm typecheck && pnpm test && pnpm build
 ```
+
 Expected: all six PASS. Do not write the workflow until this exact sequence is green — the workflow runs these same commands and debugging them locally is far faster than debugging them in Actions.
 
 - [ ] **Step 2: Create `.github/workflows/ci.yml`**
@@ -1082,9 +1156,11 @@ jobs:
 - [ ] **Step 3: Check the YAML parses**
 
 Run:
+
 ```bash
 node -e "const fs=require('fs');const s=fs.readFileSync('.github/workflows/ci.yml','utf8');if(!s.includes('name: verify'))throw new Error('job name missing');console.log('OK: workflow file present, job name is verify')"
 ```
+
 Expected: `OK: workflow file present, job name is verify`
 
 The job name matters — `verify` is the exact string used as the required status check in Task 12.
@@ -1101,6 +1177,7 @@ git commit -m "ci: add verify workflow for pull requests and pushes"
 ## Task 10: Ownership and PR guardrails
 
 **Files:**
+
 - Create: `.github/CODEOWNERS`
 - Create: `.github/pull_request_template.md`
 
@@ -1109,9 +1186,11 @@ Context: the three collaborators join later (spec §10 item 2), so every path is
 - [ ] **Step 1: Find the correct GitHub username**
 
 Run:
+
 ```bash
 gh api user --jq .login
 ```
+
 Expected: prints your GitHub username. Use that exact value everywhere `@OWNER` appears below. If `gh` is not authenticated, run `gh auth login` first.
 
 - [ ] **Step 2: Create `.github/CODEOWNERS`**
@@ -1186,9 +1265,11 @@ Replace every `@OWNER` with the username from Step 1.
 - [ ] **Step 4: Verify the placeholder was actually replaced**
 
 Run:
+
 ```bash
 grep -c "@OWNER" .github/CODEOWNERS && echo "!!! STOP: @OWNER placeholder still present !!!" || echo "OK: no placeholders left"
 ```
+
 Expected: `OK: no placeholders left`
 
 - [ ] **Step 5: Commit**
@@ -1203,6 +1284,7 @@ git commit -m "chore: add codeowners and pull request template"
 ## Task 11: Documentation
 
 **Files:**
+
 - Create: `CONTRIBUTING.md`
 - Modify: `README.md`
 - Modify: `docs/PROGRESS.md`
@@ -1221,13 +1303,14 @@ Context: the README currently documents a Docker-based setup that does not work 
 - PostgreSQL 16 running locally
 
 ## Branches
-
 ```
-main   ← deployable. Only ever receives merges from dev.
- ↑
-dev    ← integration. All feature work lands here.
- ↑
-feat/<domain>-<thing>   ← your branch. Short-lived; aim to merge within 3 days.
+
+main ← deployable. Only ever receives merges from dev.
+↑
+dev ← integration. All feature work lands here.
+↑
+feat/<domain>-<thing> ← your branch. Short-lived; aim to merge within 3 days.
+
 ```
 
 Branch names: `feat/finance-budget-crud`, `fix/booking-overlap`, `chore/eslint-config`.
@@ -1240,31 +1323,33 @@ Branch names: `feat/finance-budget-crud`, `fix/booking-overlap`, `chore/eslint-c
 [Conventional Commits](https://www.conventionalcommits.org/), with the domain as the scope:
 
 ```
+
 feat(finance): add budget CRUD endpoints
 fix(bookings): reject overlapping room reservations
 chore(lint): enforce feature import boundaries
-```
+
+````
 
 ## Before you open a PR
 
 ```bash
 pnpm lint && pnpm typecheck && pnpm test && pnpm build
-```
+````
 
 CI runs exactly these four, in this order, plus `prisma generate` first. If they pass locally they will pass in CI.
 
 ## Where things go
 
-| You are adding | It goes in |
-| --- | --- |
-| An API endpoint | `apps/api/src/modules/<domain>/<domain>.controller.ts` |
-| Business logic | `apps/api/src/modules/<domain>/<domain>.service.ts` |
-| A request/response shape used by both apps | `packages/shared/src/<domain>/` |
-| A screen | `apps/web/src/features/<domain>/` |
-| An API call from the web app | `apps/web/src/features/<domain>/api.ts` |
-| A data hook | `apps/web/src/features/<domain>/queries.ts` |
-| A component only your domain uses | `apps/web/src/features/<domain>/components/` |
-| A component every domain could use | `apps/web/src/components/shared/` |
+| You are adding                             | It goes in                                             |
+| ------------------------------------------ | ------------------------------------------------------ |
+| An API endpoint                            | `apps/api/src/modules/<domain>/<domain>.controller.ts` |
+| Business logic                             | `apps/api/src/modules/<domain>/<domain>.service.ts`    |
+| A request/response shape used by both apps | `packages/shared/src/<domain>/`                        |
+| A screen                                   | `apps/web/src/features/<domain>/`                      |
+| An API call from the web app               | `apps/web/src/features/<domain>/api.ts`                |
+| A data hook                                | `apps/web/src/features/<domain>/queries.ts`            |
+| A component only your domain uses          | `apps/web/src/features/<domain>/components/`           |
+| A component every domain could use         | `apps/web/src/components/shared/`                      |
 
 ## Rules the linter enforces
 
@@ -1289,7 +1374,8 @@ This keeps Vitest working without extra tooling — esbuild does not emit the de
 ## The design spec
 
 `docs/superpowers/specs/2026-08-15-team-dev-foundation-design.md` explains why the structure is the way it is. Read it before proposing a change to it.
-```
+
+````
 
 - [ ] **Step 2: Replace the "Getting started" section of `README.md`**
 
@@ -1322,7 +1408,7 @@ pnpm db:seed        # prints a generated admin password ONCE — save it
 
 # 6. Start dev servers
 pnpm dev
-```
+````
 
 - API: <http://localhost:3000>
 - Web: <http://localhost:5175>
@@ -1331,7 +1417,8 @@ pnpm dev
 path is Homebrew Postgres.
 
 See `CONTRIBUTING.md` for branches, commits, and where new files go.
-```
+
+````
 
 - [ ] **Step 3: Update the scripts table in `README.md`**
 
@@ -1342,7 +1429,7 @@ In the `## Scripts` table, add these rows after the `pnpm typecheck` row:
 | `pnpm test` | Vitest in every package |
 | `pnpm format` | Prettier write |
 | `pnpm format:check` | Prettier check (what CI runs indirectly) |
-```
+````
 
 - [ ] **Step 4: Update `docs/PROGRESS.md`**
 
@@ -1387,9 +1474,11 @@ Design spec: `docs/superpowers/specs/2026-08-15-team-dev-foundation-design.md`
 - [ ] **Step 5: Verify the docs are formatted and the repo is still green**
 
 Run:
+
 ```bash
 pnpm format && pnpm lint && pnpm typecheck && pnpm test
 ```
+
 Expected: all PASS.
 
 - [ ] **Step 6: Commit**
@@ -1410,9 +1499,11 @@ git commit -m "docs: add contributing guide and correct setup instructions"
 - [ ] **Step 1: Final secret sweep across the entire history**
 
 Run:
+
 ```bash
 git log --all --diff-filter=A --name-only --format="" | sort -u | grep -E '(^|/)\.env$' && echo "!!! STOP: a .env file exists somewhere in history !!!" || echo "OK: no .env ever committed"
 ```
+
 Expected: `OK: no .env ever committed`
 
 If this fails, **do not publish**. The history must be rewritten (or the repo re-initialised) and the JWT secrets rotated first.
@@ -1420,38 +1511,47 @@ If this fails, **do not publish**. The history must be rewritten (or the repo re
 - [ ] **Step 2: Confirm the working tree is clean and green**
 
 Run:
+
 ```bash
 git status --porcelain && pnpm lint && pnpm typecheck && pnpm test && pnpm build && echo "READY TO PUBLISH"
 ```
+
 Expected: no output from `git status`, then all gates pass, then `READY TO PUBLISH`.
 
 - [ ] **Step 3: Create the public repository and push `main`**
 
 Run:
+
 ```bash
 gh repo create church-management --public --source=. --remote=origin --description "Church Management System — landing page + role-based dashboards (Admin, Finance, Division Leader)" --push
 ```
+
 Expected: the repo is created and `main` is pushed. The command prints the repository URL.
 
 - [ ] **Step 4: Create and push `dev`**
 
 Run:
+
 ```bash
 git checkout -b dev && git push -u origin dev && git checkout main
 ```
+
 Expected: `dev` exists on the remote and tracks `origin/dev`.
 
 - [ ] **Step 5: Watch the first CI run**
 
 Run:
+
 ```bash
 gh run watch
 ```
+
 Expected: the `verify` job passes. If it fails, fix it on a branch and open the first PR — do not push a fix directly to `main`.
 
 - [ ] **Step 6: Protect `main`**
 
 Run:
+
 ```bash
 gh api -X PUT "repos/:owner/church-management/branches/main/protection" \
   --input - <<'JSON'
@@ -1469,6 +1569,7 @@ gh api -X PUT "repos/:owner/church-management/branches/main/protection" \
 }
 JSON
 ```
+
 Expected: JSON describing the protection rules is returned.
 
 - [ ] **Step 7: Protect `dev`, without the approval requirement for now**
@@ -1476,6 +1577,7 @@ Expected: JSON describing the protection rules is returned.
 Per spec §10 item 4: you are currently the only developer, and GitHub will not let you approve your own PR. The status check is the gate that catches broken code; the approval rule is switched on when the second person joins.
 
 Run:
+
 ```bash
 gh api -X PUT "repos/:owner/church-management/branches/dev/protection" \
   --input - <<'JSON'
@@ -1489,22 +1591,27 @@ gh api -X PUT "repos/:owner/church-management/branches/dev/protection" \
 }
 JSON
 ```
+
 Expected: JSON describing the protection rules is returned.
 
 - [ ] **Step 8: Verify protection is actually in force**
 
 Run:
+
 ```bash
 gh api "repos/:owner/church-management/branches/main/protection" --jq '{checks: .required_status_checks.contexts, reviews: .required_pull_request_reviews.required_approving_review_count, force_push: .allow_force_pushes.enabled}'
 ```
+
 Expected: `{"checks":["verify"],"reviews":1,"force_push":false}`
 
 - [ ] **Step 9: Turn off unused repository features**
 
 Run:
+
 ```bash
 gh api -X PATCH "repos/:owner/church-management" -f has_wiki=false -f has_projects=false --jq '{wiki: .has_wiki, projects: .has_projects, visibility: .visibility}'
 ```
+
 Expected: `{"wiki":false,"projects":false,"visibility":"public"}`
 
 - [ ] **Step 10: Record the outcome**
@@ -1526,6 +1633,7 @@ git commit -m "docs: record repository url and branch protection"
 git push -u origin chore/record-repo-url
 gh pr create --base dev --title "docs: record repository url and branch protection" --fill
 ```
+
 Expected: the PR is created, CI runs, and the merge button is blocked until `verify` is green — which confirms the whole setup works.
 
 ---

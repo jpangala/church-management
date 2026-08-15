@@ -60,7 +60,9 @@ export default function RadioCardGroup({
               </span>
             )}
             <div className="min-w-0 flex-1">
-              <p className="text-[13px] font-medium text-foreground">{o.label}</p>
+              <p className="text-[13px] font-medium text-foreground">
+                {o.label}
+              </p>
               {o.description && (
                 <p className="mt-0.5 text-[12px] leading-relaxed text-muted-foreground">
                   {o.description}

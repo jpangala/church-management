@@ -70,8 +70,10 @@ export default function DataTable<T extends { id: string | number }>({
     }
   }
 
-  const allSelected = sorted.length > 0 && sorted.every((r) => selectedIds.has(r.id));
-  const someSelected = sorted.some((r) => selectedIds.has(r.id)) && !allSelected;
+  const allSelected =
+    sorted.length > 0 && sorted.every((r) => selectedIds.has(r.id));
+  const someSelected =
+    sorted.some((r) => selectedIds.has(r.id)) && !allSelected;
 
   function toggleAll() {
     if (!onSelectionChange) return;

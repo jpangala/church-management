@@ -35,7 +35,12 @@ export class AuthService {
     const tokens = await this.issueTokens({ sub: user.id, role: user.role });
     return {
       ...tokens,
-      user: { id: user.id, email: user.email, name: user.name, role: user.role },
+      user: {
+        id: user.id,
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
     };
   }
 
@@ -46,7 +51,13 @@ export class AuthService {
       });
       const user = await this.prisma.user.findUnique({
         where: { id: payload.sub },
-        select: { id: true, email: true, name: true, role: true, isActive: true },
+        select: {
+          id: true,
+          email: true,
+          name: true,
+          role: true,
+          isActive: true,
+        },
       });
       if (!user || !user.isActive) {
         throw new UnauthorizedException();

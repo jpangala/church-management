@@ -8,14 +8,16 @@ const invalid =
   "ring-destructive/40 bg-destructive/[0.03] focus:ring-destructive/60";
 
 // ---- TextInput ----
-interface TextInputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {
+interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   invalid?: boolean;
   leading?: React.ReactNode;
 }
 
 export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
-  function TextInput({ invalid: isInvalid, leading, className = "", ...rest }, ref) {
+  function TextInput(
+    { invalid: isInvalid, leading, className = "", ...rest },
+    ref,
+  ) {
     if (leading) {
       return (
         <div className="relative">
@@ -41,13 +43,15 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
 );
 
 // ---- Textarea ----
-interface TextareaProps
-  extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
+interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   invalid?: boolean;
 }
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  function Textarea({ invalid: isInvalid, className = "", rows = 4, ...rest }, ref) {
+  function Textarea(
+    { invalid: isInvalid, className = "", rows = 4, ...rest },
+    ref,
+  ) {
     return (
       <textarea
         ref={ref}
@@ -60,35 +64,36 @@ export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
 );
 
 // ---- Select ----
-interface SelectProps
-  extends React.SelectHTMLAttributes<HTMLSelectElement> {
+interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   invalid?: boolean;
   options: { value: string; label: string }[];
 }
 
-export const Select = forwardRef<HTMLSelectElement, SelectProps>(function Select(
-  { invalid: isInvalid, options, className = "", ...rest },
-  ref,
-) {
-  return (
-    <div className="relative">
-      <select
-        ref={ref}
-        {...rest}
-        className={`${base} appearance-none pr-11 ${isInvalid ? invalid : ""} ${className}`}
-      >
-        {options.map((o) => (
-          <option key={o.value} value={o.value}>
-            {o.label}
-          </option>
-        ))}
-      </select>
-      <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-foreground/55">
-        <ChevronDown width={14} height={14} />
-      </span>
-    </div>
-  );
-});
+export const Select = forwardRef<HTMLSelectElement, SelectProps>(
+  function Select(
+    { invalid: isInvalid, options, className = "", ...rest },
+    ref,
+  ) {
+    return (
+      <div className="relative">
+        <select
+          ref={ref}
+          {...rest}
+          className={`${base} appearance-none pr-11 ${isInvalid ? invalid : ""} ${className}`}
+        >
+          {options.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+        <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-4 text-foreground/55">
+          <ChevronDown width={14} height={14} />
+        </span>
+      </div>
+    );
+  },
+);
 
 // ---- Switch (toggle) ----
 interface SwitchProps {

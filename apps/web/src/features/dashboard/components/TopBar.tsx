@@ -49,7 +49,9 @@ export default function TopBar({ eyebrow, title, caption, trailing }: Props) {
               <span className="text-foreground/80">{title}</span>
             </div>
             {caption && (
-              <p className="mt-0.5 truncate text-xs text-muted-foreground">{caption}</p>
+              <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                {caption}
+              </p>
             )}
           </div>
 

@@ -33,7 +33,11 @@ export default function Toolbar({
       <div className="flex flex-col gap-3 rounded-[calc(1.5rem-5px)] bg-surface/85 p-3 shadow-inner-hairline sm:flex-row sm:items-center">
         {/* Search */}
         <div className="flex items-center gap-2 rounded-full bg-foreground/[0.04] px-3.5 py-2 ring-1 ring-inset ring-foreground/[0.06] sm:min-w-[280px] sm:flex-1">
-          <Search width={14} height={14} className="shrink-0 text-foreground/60" />
+          <Search
+            width={14}
+            height={14}
+            className="shrink-0 text-foreground/60"
+          />
           <input
             type="search"
             value={searchValue}
@@ -91,7 +95,9 @@ export default function Toolbar({
           </div>
         )}
 
-        {trailing && <div className="ml-auto flex items-center gap-2">{trailing}</div>}
+        {trailing && (
+          <div className="ml-auto flex items-center gap-2">{trailing}</div>
+        )}
       </div>
     </div>
   );

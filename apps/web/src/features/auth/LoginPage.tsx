@@ -51,7 +51,9 @@ export default function LoginPage() {
         <div className="container flex items-center justify-between py-4">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-md bg-primary" aria-hidden />
-            <span className="font-display text-xl text-primary">Gereja XYZ</span>
+            <span className="font-display text-xl text-primary">
+              Gereja XYZ
+            </span>
           </div>
           <button
             onClick={toggleLocale}
@@ -85,7 +87,10 @@ export default function LoginPage() {
             </div>
 
             <div>
-              <label className="text-sm text-muted-foreground" htmlFor="password">
+              <label
+                className="text-sm text-muted-foreground"
+                htmlFor="password"
+              >
                 {t("auth.login.password")}
               </label>
               <input

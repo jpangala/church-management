@@ -45,18 +45,18 @@ Recorded so nobody assumes they are in scope:
 
 ## 4. Decisions
 
-| # | Decision | Chosen | Rejected alternatives |
-|---|---|---|---|
-| D1 | Team split | Domain-owned, full-stack — each person owns a slice end to end | By layer (2 BE / 2 FE); free-for-all tickets; lead + 3 devs |
-| D2 | Pipeline scope | CI only for now | CI + staging deploy; CI + staging + prod |
-| D3 | CI gates | Lint + typecheck + build + Vitest unit tests | Lint/typecheck/build only; e2e required |
-| D4 | E2E tests | Not scaffolded at all | Advisory job on `main`, promoted later |
-| D5 | Branching | `main` (deployable) + `dev` (integration) + `feat/*` | Trunk with short-lived branches only; direct push |
-| D6 | Backend layering | Controller → Service → Prisma | Adding a repository layer; logic in controllers |
-| D7 | API/web contract | Single-declared TypeScript types in `packages/shared`, linked to DTOs via `implements` | Shared Zod schemas; OpenAPI codegen; no shared contract |
-| D8 | UI kit location | Promote to `apps/web/src/components/shared/` | Leave in `features/dashboard/`; extract `packages/ui` now |
-| D9 | Node version | Pin 22 LTS via `.nvmrc` + `engines` | Leave unpinned; match the lead's v26 |
-| D10 | Repository visibility | **Public** | Private on Free plan (no enforced protection); private on Team (~$16/mo) |
+| #   | Decision              | Chosen                                                                                 | Rejected alternatives                                                    |
+| --- | --------------------- | -------------------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| D1  | Team split            | Domain-owned, full-stack — each person owns a slice end to end                         | By layer (2 BE / 2 FE); free-for-all tickets; lead + 3 devs              |
+| D2  | Pipeline scope        | CI only for now                                                                        | CI + staging deploy; CI + staging + prod                                 |
+| D3  | CI gates              | Lint + typecheck + build + Vitest unit tests                                           | Lint/typecheck/build only; e2e required                                  |
+| D4  | E2E tests             | Not scaffolded at all                                                                  | Advisory job on `main`, promoted later                                   |
+| D5  | Branching             | `main` (deployable) + `dev` (integration) + `feat/*`                                   | Trunk with short-lived branches only; direct push                        |
+| D6  | Backend layering      | Controller → Service → Prisma                                                          | Adding a repository layer; logic in controllers                          |
+| D7  | API/web contract      | Single-declared TypeScript types in `packages/shared`, linked to DTOs via `implements` | Shared Zod schemas; OpenAPI codegen; no shared contract                  |
+| D8  | UI kit location       | Promote to `apps/web/src/components/shared/`                                           | Leave in `features/dashboard/`; extract `packages/ui` now                |
+| D9  | Node version          | Pin 22 LTS via `.nvmrc` + `engines`                                                    | Leave unpinned; match the lead's v26                                     |
+| D10 | Repository visibility | **Public**                                                                             | Private on Free plan (no enforced protection); private on Team (~$16/mo) |
 
 ### Accepted risks
 
@@ -73,12 +73,12 @@ Recorded so nobody assumes they are in scope:
 
 Fourteen Prisma models grouped into four slices with minimal table overlap:
 
-| Slice | Prisma models | API modules | Web features |
-|---|---|---|---|
-| Identity & Access | User, Division, AuditLog | `auth`, `users`, `divisions`, `audit` | `auth`, `admin/users`, `admin/divisions`, `admin/audit` |
-| Members & Projects | Member, Project | `members`, `projects` | `members`, `projects` |
-| Bookings & Assets | Room, Item, Booking, BookingRoom, BookingItem | `rooms`, `items`, `bookings` | `bookings`, `assets` |
-| Finance | FinanceCategory, IncomeEntry, ExpenseEntry, Budget | `finance` | `finance` |
+| Slice              | Prisma models                                      | API modules                           | Web features                                            |
+| ------------------ | -------------------------------------------------- | ------------------------------------- | ------------------------------------------------------- |
+| Identity & Access  | User, Division, AuditLog                           | `auth`, `users`, `divisions`, `audit` | `auth`, `admin/users`, `admin/divisions`, `admin/audit` |
+| Members & Projects | Member, Project                                    | `members`, `projects`                 | `members`, `projects`                                   |
+| Bookings & Assets  | Room, Item, Booking, BookingRoom, BookingItem      | `rooms`, `items`, `bookings`          | `bookings`, `assets`                                    |
+| Finance            | FinanceCategory, IncomeEntry, ExpenseEntry, Budget | `finance`                             | `finance`                                               |
 
 `LandingContent` is low-traffic and assigned to the Identity & Access owner.
 
@@ -88,13 +88,13 @@ Real GitHub usernames are assigned in `CODEOWNERS` at implementation time.
 
 ### 6.1 What each unit is
 
-| | `packages/shared` | `apps/api` | `apps/web` |
-|---|---|---|---|
-| Framework | none — plain TypeScript | NestJS | React |
-| Runtime | never runs; source only | Node.js server | browser |
-| Built by | nothing (consumed as source via tsconfig paths) | `nest build` → `tsc` | Vite → Rollup |
-| Module format | ESM | CommonJS | ESM |
-| Output | — | `dist/main.js` (PM2) | static `dist/` (nginx) |
+|               | `packages/shared`                               | `apps/api`           | `apps/web`             |
+| ------------- | ----------------------------------------------- | -------------------- | ---------------------- |
+| Framework     | none — plain TypeScript                         | NestJS               | React                  |
+| Runtime       | never runs; source only                         | Node.js server       | browser                |
+| Built by      | nothing (consumed as source via tsconfig paths) | `nest build` → `tsc` | Vite → Rollup          |
+| Module format | ESM                                             | CommonJS             | ESM                    |
+| Output        | —                                               | `dist/main.js` (PM2) | static `dist/` (nginx) |
 
 Vite is the build tool and dev server for `apps/web`, not a framework. Only `index.html`, `vite.config.ts`, `postcss.config.js` + `tailwind.config.ts`, and `import.meta.env.VITE_*` are Vite's concern. Everything in `apps/web/src/` is React.
 
@@ -166,13 +166,13 @@ This mirrors `controller → service` on the API: the page is the controller, `q
 
 **Component tiers**
 
-| Tier | Location | Rule |
-|---|---|---|
-| 1 | `components/ui/` | shadcn primitives; no domain knowledge |
-| 2 | `components/shared/` | reusable kit, imported by all four people; no domain knowledge; changes need review |
-| 3 | `features/<domain>/components/` | knows one domain; owned by one person; never imported by another feature |
+| Tier | Location                        | Rule                                                                                |
+| ---- | ------------------------------- | ----------------------------------------------------------------------------------- |
+| 1    | `components/ui/`                | shadcn primitives; no domain knowledge                                              |
+| 2    | `components/shared/`            | reusable kit, imported by all four people; no domain knowledge; changes need review |
+| 3    | `features/<domain>/components/` | knows one domain; owned by one person; never imported by another feature            |
 
-Test for tier 2: *could a different domain use it unmodified?* `DataTable` yes; `BookingSlotPicker` no.
+Test for tier 2: _could a different domain use it unmodified?_ `DataTable` yes; `BookingSlotPicker` no.
 
 ### 6.4 Shared contract (`packages/shared`)
 
@@ -187,7 +187,10 @@ Request and response shapes are declared **once**, here, and imported by both ap
 
 ```ts
 // packages/shared/src/auth/types.ts
-export interface LoginRequest { email: string; password: string; }
+export interface LoginRequest {
+  email: string;
+  password: string;
+}
 ```
 
 ```ts
@@ -200,7 +203,8 @@ export class LoginDto implements LoginRequest {
 
 ```ts
 // apps/web/src/features/auth/api.ts
-export const login = (body: LoginRequest) => apiClient.post<LoginResponse>("/auth/login", body);
+export const login = (body: LoginRequest) =>
+  apiClient.post<LoginResponse>("/auth/login", body);
 ```
 
 Adding a field to `LoginRequest` breaks compilation on both sides until both are updated, and `pnpm typecheck` catches it in CI before merge.
@@ -215,13 +219,13 @@ Adding a field to `LoginRequest` breaks compilation on both sides until both are
 
 ### 6.5 Merge-conflict hotspots and mitigations
 
-| File | Why it conflicts | Mitigation |
-|---|---|---|
-| `apps/web/src/App.tsx` | holds every route inline; already ~80 lines with one domain done | each feature exports `routes.tsx`; `App.tsx` composes four imports |
-| `apps/web/src/layouts/Sidebar.tsx` | every domain adds a nav item | drive from a config array, one entry per domain |
-| `apps/api/prisma/schema.prisma` | shared by all four | schema changes go in their own small PR, lead-reviewed |
-| `packages/shared/src/index.ts` | barrel | per-domain subpath exports so people edit different lines |
-| `apps/api/src/app.module.ts` | one import + array entry per module | accepted — append-only, trivial conflicts |
+| File                               | Why it conflicts                                                 | Mitigation                                                         |
+| ---------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------------ |
+| `apps/web/src/App.tsx`             | holds every route inline; already ~80 lines with one domain done | each feature exports `routes.tsx`; `App.tsx` composes four imports |
+| `apps/web/src/layouts/Sidebar.tsx` | every domain adds a nav item                                     | drive from a config array, one entry per domain                    |
+| `apps/api/prisma/schema.prisma`    | shared by all four                                               | schema changes go in their own small PR, lead-reviewed             |
+| `packages/shared/src/index.ts`     | barrel                                                           | per-domain subpath exports so people edit different lines          |
+| `apps/api/src/app.module.ts`       | one import + array entry per module                              | accepted — append-only, trivial conflicts                          |
 
 ## 7. CI and workflow
 
@@ -302,6 +306,7 @@ Expected runtime: ~3–4 minutes per PR.
 The repository is public (D10), so branch protection, required status checks, required Code Owner review, and Actions minutes are all available at no cost. Rules to configure on both branches:
 
 **`main`**
+
 - Require a pull request before merging, with **1 approval**
 - Require status check `verify` to pass
 - Require review from Code Owners
@@ -309,6 +314,7 @@ The repository is public (D10), so branch protection, required status checks, re
 - Block force pushes and branch deletion
 
 **`dev`**
+
 - Require a pull request before merging, with **1 approval**
 - Require status check `verify` to pass
 - Block force pushes
@@ -319,17 +325,17 @@ Repository settings: disable Wiki and Projects (unused), leave Issues enabled fo
 
 ### 8.1 Files
 
-| File | Purpose |
-|---|---|
-| `.nvmrc` (`22`) | pins Node for CI and all four machines |
-| `engines` in root `package.json` (`>=22 <23`) | fails at install on a mismatched Node instead of mysteriously at build |
-| `eslint.config.js` (root, flat config) | one config, per-path overrides, including boundary rules |
-| `.prettierrc`, `.prettierignore` | removes formatting noise from reviews |
-| `.editorconfig` | same, at editor level |
-| `apps/api/vitest.config.ts`, `apps/web/vitest.config.ts` | test runner |
-| Root scripts `test`, `format`, `format:check` | one command per CI gate |
-| `.github/CODEOWNERS` | auto-requests the right reviewer; gates shared paths |
-| `.github/pull_request_template.md` | what changed · how tested · touches shared code? · screenshot if UI |
+| File                                                     | Purpose                                                                |
+| -------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `.nvmrc` (`22`)                                          | pins Node for CI and all four machines                                 |
+| `engines` in root `package.json` (`>=22 <23`)            | fails at install on a mismatched Node instead of mysteriously at build |
+| `eslint.config.js` (root, flat config)                   | one config, per-path overrides, including boundary rules               |
+| `.prettierrc`, `.prettierignore`                         | removes formatting noise from reviews                                  |
+| `.editorconfig`                                          | same, at editor level                                                  |
+| `apps/api/vitest.config.ts`, `apps/web/vitest.config.ts` | test runner                                                            |
+| Root scripts `test`, `format`, `format:check`            | one command per CI gate                                                |
+| `.github/CODEOWNERS`                                     | auto-requests the right reviewer; gates shared paths                   |
+| `.github/pull_request_template.md`                       | what changed · how tested · touches shared code? · screenshot if UI    |
 
 ### 8.2 Boundary rules as lint rules
 

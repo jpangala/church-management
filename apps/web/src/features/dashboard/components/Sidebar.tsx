@@ -111,7 +111,9 @@ export default function Sidebar({ role }: Props) {
               className="relative inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-soft-glow"
               aria-hidden
             >
-              <span className="font-editorial text-xl font-medium leading-none">G</span>
+              <span className="font-editorial text-xl font-medium leading-none">
+                G
+              </span>
               <span className="absolute -bottom-1 -right-1 h-2.5 w-2.5 rounded-full bg-accent ring-2 ring-surface" />
             </span>
             <div className="leading-tight">
@@ -163,7 +165,9 @@ export default function Sidebar({ role }: Props) {
                             >
                               {item.icon}
                             </span>
-                            <span className="tracking-[-0.005em]">{item.label}</span>
+                            <span className="tracking-[-0.005em]">
+                              {item.label}
+                            </span>
                           </>
                         )}
                       </NavLink>

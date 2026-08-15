@@ -29,26 +29,27 @@ Workspace: **Church Management System Project**
 - Sprint Plan — Phase 2–6
 
 Shared with colleagues (separate workspace):
+
 - Church Management — Shared with Colleagues (duplicates of Spec, Permissions, Data Model)
 
 ## Locked Decisions
 
-| Topic | Decision |
-| --- | --- |
-| Backend | NestJS (TypeScript) |
-| Frontend | React + Vite + TypeScript |
-| Database | PostgreSQL |
-| ORM | Prisma |
-| UI | Tailwind + shadcn/ui |
-| Hosting | VPS (nginx + PM2) |
-| Repo | pnpm monorepo (`apps/api`, `apps/web`, `packages/shared`) |
-| Brand | Reverent Classic (navy + warm gold + cream) |
-| Currency | IDR only |
-| Booking time | Hourly slots (`startAt`/`endAt`, minute = 00) |
-| Leader per division | Exactly 1 (unique FK `Division.leaderUserId`) |
-| Report export | PDF only (with church header) |
-| UI language | Indonesian + English, switchable (default Indonesian) |
-| Audit log | Required, Admin-only access |
+| Topic               | Decision                                                  |
+| ------------------- | --------------------------------------------------------- |
+| Backend             | NestJS (TypeScript)                                       |
+| Frontend            | React + Vite + TypeScript                                 |
+| Database            | PostgreSQL                                                |
+| ORM                 | Prisma                                                    |
+| UI                  | Tailwind + shadcn/ui                                      |
+| Hosting             | VPS (nginx + PM2)                                         |
+| Repo                | pnpm monorepo (`apps/api`, `apps/web`, `packages/shared`) |
+| Brand               | Reverent Classic (navy + warm gold + cream)               |
+| Currency            | IDR only                                                  |
+| Booking time        | Hourly slots (`startAt`/`endAt`, minute = 00)             |
+| Leader per division | Exactly 1 (unique FK `Division.leaderUserId`)             |
+| Report export       | PDF only (with church header)                             |
+| UI language         | Indonesian + English, switchable (default Indonesian)     |
+| Audit log           | Required, Admin-only access                               |
 
 ## Open Item — Figma Wireframes (PENDING)
 
@@ -65,6 +66,7 @@ The connected Figma account has a **View-only seat** on the Starter plan, which 
 4. **Skip visual mockups** entirely — the ASCII wireframes in Notion are enough for stakeholder approval; build in code directly.
 
 ### Recommendation
+
 Don't gate Phase 2 on this. Continue with the local prototype now; revisit Figma when the church confirms whether a polished visual deliverable is needed for the majelis presentation.
 
 ## Next Up

@@ -1,0 +1,9 @@
+node_modules
+dist
+coverage
+pnpm-lock.yaml
+graphify-out
+apps/api/prisma/migrations
+apps/web/vite.config.js
+apps/web/vite.config.d.ts
+*.tsbuildinfo

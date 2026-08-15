@@ -14,12 +14,20 @@ export default function LandingPage() {
         <div className="container flex items-center justify-between py-4">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-md bg-primary" aria-hidden />
-            <span className="font-display text-xl text-primary">Gereja XYZ</span>
+            <span className="font-display text-xl text-primary">
+              Gereja XYZ
+            </span>
           </div>
           <nav className="flex items-center gap-6 text-sm">
-            <a href="#about" className="hover:text-primary">{t("nav.profile")}</a>
-            <a href="#divisions" className="hover:text-primary">{t("nav.divisions")}</a>
-            <a href="#timeline" className="hover:text-primary">{t("nav.timeline")}</a>
+            <a href="#about" className="hover:text-primary">
+              {t("nav.profile")}
+            </a>
+            <a href="#divisions" className="hover:text-primary">
+              {t("nav.divisions")}
+            </a>
+            <a href="#timeline" className="hover:text-primary">
+              {t("nav.timeline")}
+            </a>
             <button
               onClick={toggleLocale}
               className="rounded border border-border px-2 py-1 text-xs uppercase"
@@ -64,14 +72,19 @@ export default function LandingPage() {
 
       <section id="divisions" className="bg-background py-20">
         <div className="container">
-          <h2 className="font-display text-3xl text-primary">Divisi Pelayanan</h2>
+          <h2 className="font-display text-3xl text-primary">
+            Divisi Pelayanan
+          </h2>
           <p className="mt-4 max-w-2xl text-muted-foreground">
             (Kartu divisi akan diisi dari API — Sprint 5.)
           </p>
         </div>
       </section>
 
-      <section id="timeline" className="border-t border-border bg-surface py-20">
+      <section
+        id="timeline"
+        className="border-t border-border bg-surface py-20"
+      >
         <div className="container">
           <h2 className="font-display text-3xl text-primary">
             {t("landing.timeline.title")}

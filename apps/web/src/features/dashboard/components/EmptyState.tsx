@@ -5,7 +5,12 @@ interface Props {
   action?: React.ReactNode;
 }
 
-export default function EmptyState({ title, description, icon, action }: Props) {
+export default function EmptyState({
+  title,
+  description,
+  icon,
+  action,
+}: Props) {
   return (
     <div className="mx-auto flex max-w-md flex-col items-center text-center">
       {icon && (

@@ -53,17 +53,17 @@ pnpm dev
 
 ## Scripts
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Run API + Web together |
-| `pnpm dev:api` | API only |
-| `pnpm dev:web` | Web only |
-| `pnpm build` | Build all packages |
-| `pnpm typecheck` | TS check across the repo |
-| `pnpm db:up` / `db:down` | Postgres container |
-| `pnpm db:migrate` | Apply Prisma migrations |
-| `pnpm db:seed` | Seed initial admin |
-| `pnpm db:reset` | Drop + re-migrate + seed |
+| Command                  | What it does             |
+| ------------------------ | ------------------------ |
+| `pnpm dev`               | Run API + Web together   |
+| `pnpm dev:api`           | API only                 |
+| `pnpm dev:web`           | Web only                 |
+| `pnpm build`             | Build all packages       |
+| `pnpm typecheck`         | TS check across the repo |
+| `pnpm db:up` / `db:down` | Postgres container       |
+| `pnpm db:migrate`        | Apply Prisma migrations  |
+| `pnpm db:seed`           | Seed initial admin       |
+| `pnpm db:reset`          | Drop + re-migrate + seed |
 
 ## Docs
 

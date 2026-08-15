@@ -6,4 +6,8 @@ export const Role = {
 
 export type Role = (typeof Role)[keyof typeof Role];
 
-export const ALL_ROLES: Role[] = [Role.ADMIN, Role.FINANCE, Role.DIVISION_LEADER];
+export const ALL_ROLES: Role[] = [
+  Role.ADMIN,
+  Role.FINANCE,
+  Role.DIVISION_LEADER,
+];

@@ -61,7 +61,9 @@ export default function UserFormPage() {
   const isEdit = Boolean(id) && id !== "new";
 
   const [form, setForm] = useState<FormState>(INITIAL);
-  const [errors, setErrors] = useState<Partial<Record<keyof FormState, string>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof FormState, string>>
+  >({});
   const [isSaving, setIsSaving] = useState(false);
   const [savedAt, setSavedAt] = useState<string | null>(null);
 
@@ -171,7 +173,10 @@ export default function UserFormPage() {
                     />
                   )}
                 </Field>
-                <Field label="Telepon" description="WhatsApp / SMS untuk reset password.">
+                <Field
+                  label="Telepon"
+                  description="WhatsApp / SMS untuk reset password."
+                >
                   {(id) => (
                     <TextInput
                       id={id}
@@ -193,7 +198,9 @@ export default function UserFormPage() {
                   <Select
                     id={id}
                     value={form.locale}
-                    onChange={(e) => set("locale", e.target.value as "id" | "en")}
+                    onChange={(e) =>
+                      set("locale", e.target.value as "id" | "en")
+                    }
                     options={[
                       { value: "id", label: "Bahasa Indonesia" },
                       { value: "en", label: "English" },
@@ -242,7 +249,8 @@ export default function UserFormPage() {
                       {
                         value: "DIVISION_LEADER",
                         label: "Division Leader",
-                        description: "Kelola anggota, proyek, dan booking divisi.",
+                        description:
+                          "Kelola anggota, proyek, dan booking divisi.",
                         icon: <Layers width={16} height={16} />,
                       },
                     ]}

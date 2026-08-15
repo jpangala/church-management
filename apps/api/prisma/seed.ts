@@ -7,7 +7,9 @@ async function main() {
   const adminEmail = "admin@church.local";
   const adminPassword = "ChangeMe123!";
 
-  const existing = await prisma.user.findUnique({ where: { email: adminEmail } });
+  const existing = await prisma.user.findUnique({
+    where: { email: adminEmail },
+  });
   if (existing) {
     console.log(`[seed] admin already exists: ${adminEmail}`);
     return;

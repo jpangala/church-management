@@ -103,7 +103,11 @@ const TONE = {
 } as const;
 
 const MEMBERS = [
-  { name: "Yosua Pangabean", role: "Division Leader · Worship", joined: "2 hari" },
+  {
+    name: "Yosua Pangabean",
+    role: "Division Leader · Worship",
+    joined: "2 hari",
+  },
   { name: "Rina Halim", role: "Finance · Treasurer", joined: "5 hari" },
   { name: "Daniel Tan", role: "Division Leader · Youth", joined: "1 mgg" },
   { name: "Grace Hartono", role: "Member · Outreach", joined: "1 mgg" },
@@ -190,8 +194,8 @@ export default function AdminDashboard() {
               </div>
               <div className="mt-5 hairline" />
               <p className="mt-4 text-[12px] leading-relaxed text-muted-foreground">
-                Backup harian terakhir 02:14 WIB. Tidak ada anomali audit
-                dalam 24 jam terakhir.
+                Backup harian terakhir 02:14 WIB. Tidak ada anomali audit dalam
+                24 jam terakhir.
               </p>
             </Panel>
           </div>

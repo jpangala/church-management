@@ -21,7 +21,10 @@ interface AuthContextValue extends AuthState {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [state, setState] = useState<AuthState>({ user: null, isLoading: true });
+  const [state, setState] = useState<AuthState>({
+    user: null,
+    isLoading: true,
+  });
 
   // On mount: validate existing access token against /auth/me
   useEffect(() => {

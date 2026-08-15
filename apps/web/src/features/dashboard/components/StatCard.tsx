@@ -10,7 +10,14 @@ interface Props {
   accent?: boolean;
 }
 
-export default function StatCard({ label, value, delta, sub, icon, accent }: Props) {
+export default function StatCard({
+  label,
+  value,
+  delta,
+  sub,
+  icon,
+  accent,
+}: Props) {
   return (
     <Panel
       tone={accent ? "espresso" : "surface"}

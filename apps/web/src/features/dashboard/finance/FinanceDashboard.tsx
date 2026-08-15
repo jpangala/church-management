@@ -262,8 +262,7 @@ export default function FinanceDashboard() {
                     Rp 312M
                   </p>
                   <p className="mt-3 text-[13px] leading-relaxed text-white/65">
-                    Cadangan terlindungi, target 6 bulan operasi. Tercapai
-                    74%.
+                    Cadangan terlindungi, target 6 bulan operasi. Tercapai 74%.
                   </p>
                 </div>
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.08] text-white/85 ring-1 ring-inset ring-white/10">
@@ -271,7 +270,10 @@ export default function FinanceDashboard() {
                 </span>
               </div>
               <div className="mt-6 flex h-2 overflow-hidden rounded-full bg-white/[0.08]">
-                <span className="block h-full bg-accent" style={{ width: "74%" }} />
+                <span
+                  className="block h-full bg-accent"
+                  style={{ width: "74%" }}
+                />
               </div>
               <div className="mt-5 flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-white/55">
                 <span>Target Rp 420M</span>
@@ -409,7 +411,11 @@ export default function FinanceDashboard() {
                 Realisasi vs alokasi bulan berjalan.
               </p>
             </div>
-            <IslandButton variant="ghost" size="sm" trailingIcon={<Tag width={12} height={12} />}>
+            <IslandButton
+              variant="ghost"
+              size="sm"
+              trailingIcon={<Tag width={12} height={12} />}
+            >
               Atur Kategori
             </IslandButton>
           </div>
@@ -444,7 +450,8 @@ export default function FinanceDashboard() {
                     />
                   </div>
                   <p className="mt-3 text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                    Rp {(b.used * 0.18).toFixed(1)}M / Rp {(b.total * 0.18).toFixed(1)}M
+                    Rp {(b.used * 0.18).toFixed(1)}M / Rp{" "}
+                    {(b.total * 0.18).toFixed(1)}M
                   </p>
                 </div>
               </li>

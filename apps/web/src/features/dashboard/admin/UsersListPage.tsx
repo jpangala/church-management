@@ -34,18 +34,121 @@ interface User {
 
 // --- Mocked dataset — swap with TanStack Query against /api/users later. ---
 const ALL_USERS: User[] = [
-  { id: "u1", name: "Admin Gereja", email: "admin@church.local", role: "ADMIN", status: "active", lastSeen: "Baru saja", lastSeenSort: 1 },
-  { id: "u2", name: "Sarah Lim", email: "sarah.lim@church.local", role: "FINANCE", status: "active", lastSeen: "12 menit", lastSeenSort: 12 },
-  { id: "u3", name: "Yosua Pangabean", email: "yosua@church.local", role: "DIVISION_LEADER", division: "Musik", status: "active", lastSeen: "1 jam", lastSeenSort: 60 },
-  { id: "u4", name: "Ratna Sari", email: "ratna.s@church.local", role: "DIVISION_LEADER", division: "Doa", status: "active", lastSeen: "2 jam", lastSeenSort: 120 },
-  { id: "u5", name: "Daniel Pratama", email: "daniel.p@church.local", role: "DIVISION_LEADER", division: "Pemuda", status: "invited", lastSeen: "—", lastSeenSort: 999999 },
-  { id: "u6", name: "Andre Wijaya", email: "andre.w@church.local", role: "DIVISION_LEADER", division: "Media", status: "active", lastSeen: "Kemarin", lastSeenSort: 1440 },
-  { id: "u7", name: "Grace Hartono", email: "grace.h@church.local", role: "FINANCE", status: "disabled", lastSeen: "2 minggu", lastSeenSort: 20160 },
-  { id: "u8", name: "Maria Santos", email: "maria.s@church.local", role: "DIVISION_LEADER", division: "Diakonia", status: "active", lastSeen: "3 jam", lastSeenSort: 180 },
-  { id: "u9", name: "Rina Halim", email: "rina.h@church.local", role: "FINANCE", status: "active", lastSeen: "4 jam", lastSeenSort: 240 },
-  { id: "u10", name: "Mira Saputra", email: "mira.s@church.local", role: "DIVISION_LEADER", division: "Sekretariat", status: "invited", lastSeen: "—", lastSeenSort: 999999 },
-  { id: "u11", name: "Daniel Tan", email: "daniel.t@church.local", role: "DIVISION_LEADER", division: "Pemuda Remaja", status: "active", lastSeen: "5 hari", lastSeenSort: 7200 },
-  { id: "u12", name: "Eva Kusuma", email: "eva.k@church.local", role: "ADMIN", status: "active", lastSeen: "30 menit", lastSeenSort: 30 },
+  {
+    id: "u1",
+    name: "Admin Gereja",
+    email: "admin@church.local",
+    role: "ADMIN",
+    status: "active",
+    lastSeen: "Baru saja",
+    lastSeenSort: 1,
+  },
+  {
+    id: "u2",
+    name: "Sarah Lim",
+    email: "sarah.lim@church.local",
+    role: "FINANCE",
+    status: "active",
+    lastSeen: "12 menit",
+    lastSeenSort: 12,
+  },
+  {
+    id: "u3",
+    name: "Yosua Pangabean",
+    email: "yosua@church.local",
+    role: "DIVISION_LEADER",
+    division: "Musik",
+    status: "active",
+    lastSeen: "1 jam",
+    lastSeenSort: 60,
+  },
+  {
+    id: "u4",
+    name: "Ratna Sari",
+    email: "ratna.s@church.local",
+    role: "DIVISION_LEADER",
+    division: "Doa",
+    status: "active",
+    lastSeen: "2 jam",
+    lastSeenSort: 120,
+  },
+  {
+    id: "u5",
+    name: "Daniel Pratama",
+    email: "daniel.p@church.local",
+    role: "DIVISION_LEADER",
+    division: "Pemuda",
+    status: "invited",
+    lastSeen: "—",
+    lastSeenSort: 999999,
+  },
+  {
+    id: "u6",
+    name: "Andre Wijaya",
+    email: "andre.w@church.local",
+    role: "DIVISION_LEADER",
+    division: "Media",
+    status: "active",
+    lastSeen: "Kemarin",
+    lastSeenSort: 1440,
+  },
+  {
+    id: "u7",
+    name: "Grace Hartono",
+    email: "grace.h@church.local",
+    role: "FINANCE",
+    status: "disabled",
+    lastSeen: "2 minggu",
+    lastSeenSort: 20160,
+  },
+  {
+    id: "u8",
+    name: "Maria Santos",
+    email: "maria.s@church.local",
+    role: "DIVISION_LEADER",
+    division: "Diakonia",
+    status: "active",
+    lastSeen: "3 jam",
+    lastSeenSort: 180,
+  },
+  {
+    id: "u9",
+    name: "Rina Halim",
+    email: "rina.h@church.local",
+    role: "FINANCE",
+    status: "active",
+    lastSeen: "4 jam",
+    lastSeenSort: 240,
+  },
+  {
+    id: "u10",
+    name: "Mira Saputra",
+    email: "mira.s@church.local",
+    role: "DIVISION_LEADER",
+    division: "Sekretariat",
+    status: "invited",
+    lastSeen: "—",
+    lastSeenSort: 999999,
+  },
+  {
+    id: "u11",
+    name: "Daniel Tan",
+    email: "daniel.t@church.local",
+    role: "DIVISION_LEADER",
+    division: "Pemuda Remaja",
+    status: "active",
+    lastSeen: "5 hari",
+    lastSeenSort: 7200,
+  },
+  {
+    id: "u12",
+    name: "Eva Kusuma",
+    email: "eva.k@church.local",
+    role: "ADMIN",
+    status: "active",
+    lastSeen: "30 menit",
+    lastSeenSort: 30,
+  },
 ];
 
 const ROLE_LABEL: Record<Role, string> = {
@@ -99,7 +202,8 @@ export default function UsersListPage() {
       all: ALL_USERS.length,
       ADMIN: ALL_USERS.filter((u) => u.role === "ADMIN").length,
       FINANCE: ALL_USERS.filter((u) => u.role === "FINANCE").length,
-      DIVISION_LEADER: ALL_USERS.filter((u) => u.role === "DIVISION_LEADER").length,
+      DIVISION_LEADER: ALL_USERS.filter((u) => u.role === "DIVISION_LEADER")
+        .length,
     }),
     [],
   );
@@ -294,7 +398,10 @@ export default function UsersListPage() {
         )}
       </RevealOnView>
 
-      <BulkActionBar count={selected.size} onClear={() => setSelected(new Set())}>
+      <BulkActionBar
+        count={selected.size}
+        onClear={() => setSelected(new Set())}
+      >
         <button
           type="button"
           className="inline-flex items-center gap-2 rounded-full bg-white/[0.08] px-3 py-1.5 text-[12px] font-medium ring-1 ring-inset ring-white/10 transition-colors hover:bg-white/[0.12]"

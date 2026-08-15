@@ -7,7 +7,12 @@ interface Props {
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ page, pageSize, total, onPageChange }: Props) {
+export default function Pagination({
+  page,
+  pageSize,
+  total,
+  onPageChange,
+}: Props) {
   const totalPages = Math.max(1, Math.ceil(total / pageSize));
   const from = (page - 1) * pageSize + 1;
   const to = Math.min(page * pageSize, total);
@@ -16,7 +21,11 @@ export default function Pagination({ page, pageSize, total, onPageChange }: Prop
   const pages: (number | "…")[] = [];
   const window = 1; // pages around current
   for (let i = 1; i <= totalPages; i++) {
-    if (i === 1 || i === totalPages || (i >= page - window && i <= page + window)) {
+    if (
+      i === 1 ||
+      i === totalPages ||
+      (i >= page - window && i <= page + window)
+    ) {
       pages.push(i);
     } else if (pages[pages.length - 1] !== "…") {
       pages.push("…");
