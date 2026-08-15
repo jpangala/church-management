@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main, dev]
+  push:
+    branches: [main, dev]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: verify
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # `prisma generate` reads the datasource block but never connects,
+      # so a placeholder is enough and no database service is needed.
+      DATABASE_URL: postgresql://ci:ci@localhost:5432/placeholder
+    steps:
+      - uses: actions/checkout@v4
+
+      # Version comes from "packageManager" in package.json.
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      # Must precede typecheck: @prisma/client types do not exist until generated.
+      - name: Generate Prisma client
+        run: pnpm --filter api prisma:generate
+
+      # Ordered cheapest-first so failures surface fast.
+      - name: Lint
+        run: pnpm lint
+
+      - name: Typecheck
+        run: pnpm typecheck
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build
+        run: pnpm build
