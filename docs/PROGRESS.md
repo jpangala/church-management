@@ -77,11 +77,11 @@ Don't gate Phase 2 on this. Continue with the local prototype now; revisit Figma
 - [x] Scaffold `packages/shared` (TS types)
 - [x] Scaffold `apps/api` (NestJS + Prisma schema)
 - [x] Scaffold `apps/web` (Vite + React + Tailwind + i18n)
-- [ ] Run `pnpm install`
+- [x] Run `pnpm install`
 - [ ] `pnpm db:up` (Postgres via docker-compose)
 - [ ] `pnpm db:migrate` + seed admin user
-- [ ] Implement Auth module (JWT + refresh + guards)
-- [ ] Implement Login page + auth context
+- [x] Implement Auth module (JWT + refresh + guards)
+- [x] Implement Login page + auth context
 - [ ] Build App Shell + Sidebar + RoleGate
 - [ ] First role-aware dashboard placeholder
 
@@ -89,8 +89,22 @@ Don't gate Phase 2 on this. Continue with the local prototype now; revisit Figma
 
 - Path separators: forward slashes in all docs (cross-platform safe).
 - Dates in docs: ISO `YYYY-MM-DD`.
-- All commits include a one-line message referencing the sprint, e.g. `S1: scaffold monorepo`.
+- Commits: Conventional Commits with the domain as scope, e.g. `feat(finance): add budget CRUD`.
+  (This replaces the earlier `S1: scaffold monorepo` sprint-prefix convention.)
+- Branches: `feat/<domain>-<thing>`, merged into `dev`, then `dev` → `main` at sprint end.
 - Notion is the source of truth for design/PM artifacts; this repo is source of truth for code; `/docs` here is the bridge.
+- Repository is **public**. Never commit real secrets; `.env` is gitignored and `.env.example` holds placeholders only.
+
+## Phase 2.5 — Team Foundation (2026-08-15)
+
+Design spec: `docs/superpowers/specs/2026-08-15-team-dev-foundation-design.md`
+
+- [x] Git repository (local) — public GitHub remote pending
+- [x] Node 22 pinned, ESLint + Prettier, boundary lint rules
+- [x] Vitest in both apps
+- [x] CI (`verify`): lint → typecheck → test → build
+- [x] CODEOWNERS, PR template, CONTRIBUTING.md
+- [ ] Structural refactor — see `docs/superpowers/plans/2026-08-15-structural-refactor.md`
 
 ## Quick Resume Checklist
 

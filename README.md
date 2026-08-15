@@ -26,44 +26,57 @@ Web platform for managing a church: public landing page + role-based dashboards 
 
 ## Getting started
 
-Prerequisites: Node 20+, pnpm 9+, Docker.
+Prerequisites: Node 22 (`nvm use`), pnpm 9, PostgreSQL 16 running locally.
 
 ```bash
 # 1. Install deps
 pnpm install
 
-# 2. Start Postgres
-pnpm db:up
+# 2. Start Postgres (macOS, Homebrew)
+brew services start postgresql@16
+pg_isready
 
-# 3. Copy env templates
-cp .env.example .env
+# 3. Create the role and database (first time only)
+psql postgres -c "CREATE USER church WITH PASSWORD 'churchdev' CREATEDB;"
+psql postgres -c "CREATE DATABASE church_management OWNER church;"
+
+# 4. Copy env templates
 cp apps/api/.env.example apps/api/.env
 cp apps/web/.env.example apps/web/.env
 
-# 4. Run migrations and seed
+# 5. Run migrations and seed the admin user
 pnpm db:migrate
-pnpm db:seed
+pnpm db:seed        # prints a generated admin password ONCE — save it
 
-# 5. Start dev servers
+# 6. Start dev servers
 pnpm dev
 ```
 
 - API: <http://localhost:3000>
-- Web: <http://localhost:5173>
+- Web: <http://localhost:5175>
+
+`docker-compose.yml` is kept for anyone who prefers containers, but the supported local
+path is Homebrew Postgres.
+
+See `CONTRIBUTING.md` for branches, commits, and where new files go.
 
 ## Scripts
 
-| Command                  | What it does             |
-| ------------------------ | ------------------------ |
-| `pnpm dev`               | Run API + Web together   |
-| `pnpm dev:api`           | API only                 |
-| `pnpm dev:web`           | Web only                 |
-| `pnpm build`             | Build all packages       |
-| `pnpm typecheck`         | TS check across the repo |
-| `pnpm db:up` / `db:down` | Postgres container       |
-| `pnpm db:migrate`        | Apply Prisma migrations  |
-| `pnpm db:seed`           | Seed initial admin       |
-| `pnpm db:reset`          | Drop + re-migrate + seed |
+| Command                  | What it does                             |
+| ------------------------ | ---------------------------------------- |
+| `pnpm dev`               | Run API + Web together                   |
+| `pnpm dev:api`           | API only                                 |
+| `pnpm dev:web`           | Web only                                 |
+| `pnpm build`             | Build all packages                       |
+| `pnpm typecheck`         | TS check across the repo                 |
+| `pnpm lint`              | ESLint across the whole repo             |
+| `pnpm test`              | Vitest in every package                  |
+| `pnpm format`            | Prettier write                           |
+| `pnpm format:check`      | Prettier check (what CI runs indirectly) |
+| `pnpm db:up` / `db:down` | Postgres container                       |
+| `pnpm db:migrate`        | Apply Prisma migrations                  |
+| `pnpm db:seed`           | Seed initial admin                       |
+| `pnpm db:reset`          | Drop + re-migrate + seed                 |
 
 ## Docs
 
