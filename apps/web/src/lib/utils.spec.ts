@@ -7,7 +7,9 @@ describe("cn", () => {
   });
 
   it("drops falsy values", () => {
-    expect(cn("text-sm", false, undefined, "font-bold")).toBe("text-sm font-bold");
+    expect(cn("text-sm", false, undefined, "font-bold")).toBe(
+      "text-sm font-bold",
+    );
   });
 });
 
