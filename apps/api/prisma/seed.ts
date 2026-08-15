@@ -5,9 +5,12 @@ import { resolveAdminPassword } from "./resolve-admin-password";
 const prisma = new PrismaClient();
 
 async function main() {
-  const adminEmail = process.env.SEED_ADMIN_EMAIL?.trim() || "admin@church.local";
+  const adminEmail =
+    process.env.SEED_ADMIN_EMAIL?.trim() || "admin@church.local";
 
-  const existing = await prisma.user.findUnique({ where: { email: adminEmail } });
+  const existing = await prisma.user.findUnique({
+    where: { email: adminEmail },
+  });
   if (existing) {
     console.log(`[seed] admin already exists: ${adminEmail}`);
     return;
@@ -29,7 +32,9 @@ async function main() {
 
   if (generated) {
     console.log(`[seed] generated password: ${password}`);
-    console.log("[seed] This is shown ONCE. Save it now, then change it after first login.");
+    console.log(
+      "[seed] This is shown ONCE. Save it now, then change it after first login.",
+    );
   } else {
     console.log("[seed] password taken from SEED_ADMIN_PASSWORD.");
   }

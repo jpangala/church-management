@@ -3,7 +3,9 @@ import { resolveAdminPassword } from "./resolve-admin-password";
 
 describe("resolveAdminPassword", () => {
   it("uses SEED_ADMIN_PASSWORD when it is set", () => {
-    const result = resolveAdminPassword({ SEED_ADMIN_PASSWORD: "s3cret-from-env" });
+    const result = resolveAdminPassword({
+      SEED_ADMIN_PASSWORD: "s3cret-from-env",
+    });
 
     expect(result.password).toBe("s3cret-from-env");
     expect(result.generated).toBe(false);
@@ -17,8 +19,12 @@ describe("resolveAdminPassword", () => {
   });
 
   it("generates a password when the variable is blank or whitespace", () => {
-    expect(resolveAdminPassword({ SEED_ADMIN_PASSWORD: "" }).generated).toBe(true);
-    expect(resolveAdminPassword({ SEED_ADMIN_PASSWORD: "   " }).generated).toBe(true);
+    expect(resolveAdminPassword({ SEED_ADMIN_PASSWORD: "" }).generated).toBe(
+      true,
+    );
+    expect(resolveAdminPassword({ SEED_ADMIN_PASSWORD: "   " }).generated).toBe(
+      true,
+    );
   });
 
   it("generates a different password on each call", () => {

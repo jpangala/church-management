@@ -22,6 +22,11 @@
       "@church/shared/*": ["../../packages/shared/src/*"]
     }
   },
-  "include": ["src/**/*", "prisma/seed.ts"],
+  "include": [
+    "src/**/*",
+    "prisma/seed.ts",
+    "prisma/**/*.spec.ts",
+    "prisma/**/*.test.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }
