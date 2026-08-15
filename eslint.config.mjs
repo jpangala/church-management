@@ -66,6 +66,11 @@ export default tseslint.config(
     },
   },
 
+  // 3 more boundary blocks (cross-feature imports within apps/web/src/features/,
+  // and the api.ts exception) are deferred until the folder structure they assume
+  // actually exists. See the Task 5 amendment in
+  // docs/superpowers/plans/2026-08-15-repo-and-ci-foundation.md.
+
   // ── Boundary: packages/shared must stay framework-free. ──────────────────
   // Both apps import it; a framework import here breaks one of them.
   {
