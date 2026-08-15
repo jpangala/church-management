@@ -41,6 +41,8 @@ CI runs exactly these four, in this order, plus `prisma generate` first. If they
 
 ## Where things go
 
+**This is the target structure, not what exists today.** A structural refactor (tracked in `docs/superpowers/plans/`) moves the codebase from its current single-module shape (everything lives under `apps/api/src/auth/`, `apps/web/src/features/dashboard/`, and flat files in `packages/shared/src/`) to the layout below. Until that lands, follow the existing patterns you find in those folders rather than looking for paths that don't exist yet.
+
 | You are adding                             | It goes in                                             |
 | ------------------------------------------ | ------------------------------------------------------ |
 | An API endpoint                            | `apps/api/src/modules/<domain>/<domain>.controller.ts` |

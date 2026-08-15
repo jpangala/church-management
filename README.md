@@ -62,21 +62,21 @@ See `CONTRIBUTING.md` for branches, commits, and where new files go.
 
 ## Scripts
 
-| Command                  | What it does                             |
-| ------------------------ | ---------------------------------------- |
-| `pnpm dev`               | Run API + Web together                   |
-| `pnpm dev:api`           | API only                                 |
-| `pnpm dev:web`           | Web only                                 |
-| `pnpm build`             | Build all packages                       |
-| `pnpm typecheck`         | TS check across the repo                 |
-| `pnpm lint`              | ESLint across the whole repo             |
-| `pnpm test`              | Vitest in every package                  |
-| `pnpm format`            | Prettier write                           |
-| `pnpm format:check`      | Prettier check (what CI runs indirectly) |
-| `pnpm db:up` / `db:down` | Postgres container                       |
-| `pnpm db:migrate`        | Apply Prisma migrations                  |
-| `pnpm db:seed`           | Seed initial admin                       |
-| `pnpm db:reset`          | Drop + re-migrate + seed                 |
+| Command                  | What it does                       |
+| ------------------------ | ---------------------------------- |
+| `pnpm dev`               | Run API + Web together             |
+| `pnpm dev:api`           | API only                           |
+| `pnpm dev:web`           | Web only                           |
+| `pnpm build`             | Build all packages                 |
+| `pnpm typecheck`         | TS check across the repo           |
+| `pnpm lint`              | ESLint across the whole repo       |
+| `pnpm test`              | Vitest in every package            |
+| `pnpm format`            | Prettier write                     |
+| `pnpm format:check`      | Prettier check (not yet run in CI) |
+| `pnpm db:up` / `db:down` | Postgres container                 |
+| `pnpm db:migrate`        | Apply Prisma migrations            |
+| `pnpm db:seed`           | Seed initial admin                 |
+| `pnpm db:reset`          | Drop + re-migrate + seed           |
 
 ## Docs
 

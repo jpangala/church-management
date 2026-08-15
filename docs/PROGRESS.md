@@ -1,6 +1,6 @@
 # Church Management System — Progress
 
-**Last updated:** 2026-06-13
+**Last updated:** 2026-08-15
 **Owner:** Jeremia Joseph Pangala (`j.pangala7@gmail.com`)
 **Roles worn:** Project Manager · Design Architect · Developer
 
@@ -82,8 +82,8 @@ Don't gate Phase 2 on this. Continue with the local prototype now; revisit Figma
 - [ ] `pnpm db:migrate` + seed admin user
 - [x] Implement Auth module (JWT + refresh + guards)
 - [x] Implement Login page + auth context
-- [ ] Build App Shell + Sidebar + RoleGate
-- [ ] First role-aware dashboard placeholder
+- [x] Build App Shell + Sidebar + RoleGate
+- [x] First role-aware dashboard placeholder (now well beyond placeholder — Admin, Finance, and Division dashboards are built, including a full Users CRUD)
 
 ## Conventions
 
