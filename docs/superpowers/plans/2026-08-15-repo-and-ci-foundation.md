@@ -434,11 +434,15 @@ git commit -m "chore: add eslint 9 flat config at workspace root"
 
 Context: this is the task that makes the design spec's boundaries enforceable. Each rule below corresponds to a rule in §6 and §8.2 of the spec.
 
-The relative-path patterns are depth-aware on purpose. A file directly inside a feature (`features/members/Page.tsx`) leaves its feature with a single `../`, while a file one level deeper (`features/members/components/Row.tsx`) uses `../` to reach its _own_ feature and needs `../../` to escape. Banning `../*` at both depths would produce false positives on legitimate same-feature imports, so the two depths get separate blocks.
+> **Amendment (discovered during implementation, 2026-08-15):** the cross-feature/api-client rules (the three blocks after the controller/Prisma rule, before the `packages/shared` rule) assume the _target_ folder structure from the design spec — one flat feature per domain. The codebase at this point still has the _pre-refactor_ structure (`features/dashboard/{admin,finance,division}` nested under one `dashboard` feature, all legitimately reaching into a separate `features/auth/` for the current user and role). Enabling those three blocks now fails `pnpm lint` on unchanged, correct-for-today code — 8 real errors, confirmed by running the rule against the actual tree. Fixing them properly means moving auth types into `packages/shared` and deciding where a cross-cutting `AuthProvider`/`useAuth` belongs, which is Plan 2's job, not this task's (`Files: Modify: eslint.config.mjs` only).
+>
+> **This task now ships only the two rules that are clean against today's code:** controller↔Prisma (Step 1's first block) and `packages/shared` stays framework-free (Step 1's last block), both as hard errors. The three cross-feature/api-client blocks are deferred to Plan 2's structural-refactor plan, added at the point where the folder structure actually matches what they assume — immediately after the restructuring lands, using the same rule text and the same Steps 2–4 proof pattern below. This is a deliberate scope cut, not an oversight: it keeps the gate a hard error (consistent with this project's standing rejection of advisory-only gates, see D4 in the design spec) rather than weakening it to a warning just to dodge the sequencing problem.
 
-- [ ] **Step 1: Add the boundary blocks to `eslint.config.mjs`**
+The relative-path patterns are depth-aware on purpose. A file directly inside a feature (`features/members/Page.tsx`) leaves its feature with a single `../`, while a file one level deeper (`features/members/components/Row.tsx`) uses `../` to reach its _own_ feature and needs `../../` to escape. Banning `../*` at both depths would produce false positives on legitimate same-feature imports, so the two depths get separate blocks. (This reasoning applies to the deferred Plan 2 blocks, not to what ships in this task.)
 
-Insert these blocks after the React block and **before** the tests block and the final `prettier` entry:
+- [ ] **Step 1: Add the two clean-today boundary blocks to `eslint.config.mjs`**
+
+Insert these blocks after the React block and **before** the tests block and the final `prettier` entry. Note the `allowTypeImports` placement below differs from an earlier draft of this task: `@typescript-eslint/eslint-plugin@8.x`'s `no-restricted-imports` schema rejects `allowTypeImports` as a top-level sibling of `patterns` — it belongs inside each pattern object. This was verified against the installed rule's schema and confirmed working via the Step 2 proof.
 
 ```js
   // ── Boundary: controllers must never touch Prisma. ───────────────────────
@@ -448,96 +452,12 @@ Insert these blocks after the React block and **before** the tests block and the
       "@typescript-eslint/no-restricted-imports": [
         "error",
         {
-          allowTypeImports: true,
           patterns: [
             {
               group: ["**/prisma/prisma.service", "@prisma/client"],
+              allowTypeImports: true,
               message:
                 "Controllers delegate to services. Data access belongs in *.service.ts.",
-            },
-          ],
-        },
-      ],
-    },
-  },
-
-  // ── Boundary: files at the top level of a feature. ───────────────────────
-  // Here any "../x" import has already left the feature directory.
-  {
-    files: ["apps/web/src/features/*/*.{ts,tsx}"],
-    rules: {
-      "@typescript-eslint/no-restricted-imports": [
-        "error",
-        {
-          patterns: [
-            {
-              group: ["../*", "../*/**"],
-              message:
-                "No cross-feature imports. Shared code belongs in @/components/shared or @church/shared.",
-            },
-            {
-              group: ["@/features/*", "@/features/*/**"],
-              message:
-                "No cross-feature imports. Inside your own feature use relative paths.",
-            },
-            {
-              group: ["**/lib/api-client", "@/lib/api-client"],
-              message:
-                "Only your feature's api.ts may import apiClient. Components use the hooks in queries.ts.",
-            },
-          ],
-        },
-      ],
-    },
-  },
-
-  // ── Boundary: files nested one level inside a feature. ───────────────────
-  // Here "../" is still your own feature; "../../x" escapes it.
-  {
-    files: ["apps/web/src/features/*/*/**/*.{ts,tsx}"],
-    rules: {
-      "@typescript-eslint/no-restricted-imports": [
-        "error",
-        {
-          patterns: [
-            {
-              group: ["../../*", "../../*/**"],
-              message:
-                "No cross-feature imports. Shared code belongs in @/components/shared or @church/shared.",
-            },
-            {
-              group: ["@/features/*", "@/features/*/**"],
-              message:
-                "No cross-feature imports. Inside your own feature use relative paths.",
-            },
-            {
-              group: ["**/lib/api-client", "@/lib/api-client"],
-              message:
-                "Only your feature's api.ts may import apiClient. Components use the hooks in queries.ts.",
-            },
-          ],
-        },
-      ],
-    },
-  },
-
-  // ── Exception: a feature's api.ts is the one file allowed to use apiClient.
-  // Restated in full rather than switched off, so the cross-feature bans still apply.
-  {
-    files: ["apps/web/src/features/*/api.ts"],
-    rules: {
-      "@typescript-eslint/no-restricted-imports": [
-        "error",
-        {
-          patterns: [
-            {
-              group: ["../*", "../*/**"],
-              message:
-                "No cross-feature imports. Shared code belongs in @/components/shared or @church/shared.",
-            },
-            {
-              group: ["@/features/*", "@/features/*/**"],
-              message: "No cross-feature imports.",
             },
           ],
         },
@@ -573,6 +493,8 @@ Insert these blocks after the React block and **before** the tests block and the
   },
 ```
 
+> **Deferred to Plan 2 (structural refactor), not part of this task:** the three cross-feature/api-client blocks (top-level-of-feature, nested-in-feature, and the `api.ts` exception) documented in the design spec §8.2. They assume the target flat feature-per-domain layout. Add them, with their original depth-aware reasoning and the Steps 2–4 proof pattern below, immediately after Plan 2's restructuring lands — at that point the codebase will actually conform to what they check.
+
 - [ ] **Step 2: Prove the controller rule fires**
 
 Create a throwaway file `apps/api/src/scratch.controller.ts`:
@@ -595,15 +517,15 @@ pnpm lint
 
 Expected: FAIL with `Controllers delegate to services. Data access belongs in *.service.ts.`
 
-- [ ] **Step 3: Prove the cross-feature rule fires**
+- [ ] **Step 3: Remove the throwaway file**
 
-Create a throwaway file `apps/web/src/features/landing/scratch.ts`:
+Run:
 
-```ts
-import { PrivateRoute } from "../auth/PrivateRoute";
-
-export const scratch = PrivateRoute;
+```bash
+rm -f "apps/api/src/scratch.controller.ts"
 ```
+
+- [ ] **Step 4: Verify the repository is clean again**
 
 Run:
 
@@ -611,49 +533,13 @@ Run:
 pnpm lint
 ```
 
-Expected: FAIL with `No cross-feature imports. Shared code belongs in @/components/shared or @church/shared.`
+Expected: PASS with no errors. If this instead reports errors against real files under `apps/web/src/features/`, the codebase's current structure doesn't match what was assumed when this task was descoped — stop and escalate rather than adding more rule exceptions.
 
-- [ ] **Step 4: Prove there is no false positive on same-feature imports**
-
-Create `apps/web/src/features/landing/components/scratch-ok.ts`:
-
-```ts
-import { scratch } from "../scratch";
-
-export const stillScratch = scratch;
-```
-
-Run:
-
-```bash
-pnpm lint 2>&1 | grep "scratch-ok" || echo "OK: same-feature relative import is allowed"
-```
-
-Expected: `OK: same-feature relative import is allowed` — the file must produce no cross-feature error. (The `scratch.ts` error from Step 3 is still expected and unrelated.)
-
-- [ ] **Step 5: Remove all three throwaway files**
-
-Run:
-
-```bash
-rm -f "apps/api/src/scratch.controller.ts" "apps/web/src/features/landing/scratch.ts" "apps/web/src/features/landing/components/scratch-ok.ts"
-```
-
-- [ ] **Step 6: Verify the repository is clean again**
-
-Run:
-
-```bash
-pnpm lint
-```
-
-Expected: PASS with no errors.
-
-- [ ] **Step 7: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
 git add eslint.config.mjs
-git commit -m "chore(lint): enforce architecture boundaries via no-restricted-imports"
+git commit -m "chore(lint): enforce controller/prisma and shared-package boundaries"
 ```
 
 ---
@@ -1646,7 +1532,7 @@ This plan is complete when all of the following are true:
 2. A pull request into `dev` shows the `verify` check and cannot be merged while it is red.
 3. `git log --all --diff-filter=A --name-only --format="" | grep -E '(^|/)\.env$'` returns nothing.
 4. `apps/api/dist/` contains no `*.spec.js` files after `pnpm --filter api build`.
-5. A deliberate cross-feature import in `apps/web/src/features/` fails `pnpm lint`.
+5. A deliberate controller import of `PrismaService` fails `pnpm lint`. (The cross-feature import rule is deferred to Plan 2 — see the Task 5 amendment above; enforcing it before the folder structure exists would fail lint on unchanged, correct-for-today code.)
 6. `pnpm db:seed` on a fresh database prints a generated password rather than `ChangeMe123!`.
 
 ---
@@ -1659,5 +1545,7 @@ Handled by Plan 2 (`docs/superpowers/plans/2026-08-15-structural-refactor.md`):
 - API restructure into `src/modules/` and `src/common/`
 - Web restructure: `components/shared/`, `layouts/`, per-feature `api.ts` / `queries.ts` / `routes.tsx`
 - Splitting the route table out of `App.tsx`
+- **The three cross-feature/api-client ESLint boundary blocks** deferred out of Task 5 (see that task's amendment) — added once the restructuring lands, immediately verified with the Steps 2–4 proof pattern originally written for Task 5
+- **Deciding where `AuthProvider`/`useAuth` (or an equivalent cross-cutting auth hook) lives** under the new structure — surfaced while descoping Task 5; not addressed by the design spec's component-tier table, which only covers presentational components, not context/providers. Plan 2 needs to settle this explicitly.
 
 Out of scope entirely, per spec §3: deployment automation, e2e tests, a Postgres service in CI, Zod, `packages/ui`, OpenAPI codegen, Docker, Dependabot.
