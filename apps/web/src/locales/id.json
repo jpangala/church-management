@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "Sistem Manajemen Gereja"
+  },
+  "nav": {
+    "home": "Beranda",
+    "profile": "Profil",
+    "divisions": "Divisi",
+    "timeline": "Kegiatan",
+    "login": "Masuk"
+  },
+  "landing": {
+    "hero": {
+      "title": "Selamat Datang",
+      "tagline": "Melayani jemaat dengan hati.",
+      "cta": "Pelajari Lebih Lanjut"
+    },
+    "timeline": {
+      "title": "Kegiatan & Proyek",
+      "filter": {
+        "all": "Semua",
+        "planned": "Direncanakan",
+        "ongoing": "Berjalan",
+        "done": "Selesai"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Masuk ke Sistem",
+      "email": "Email",
+      "password": "Password",
+      "remember": "Ingat saya",
+      "submit": "Masuk",
+      "submitting": "Memuat...",
+      "error": "Email atau password salah.",
+      "forgot": "Lupa password? Hubungi Admin Gereja."
+    }
+  }
+}

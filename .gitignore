@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build output
+dist/
+build/
+.next/
+.turbo/
+
+# Environment
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# IDE
+.vscode/
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Uploads (church-specific local storage)
+apps/api/uploads/
+
+# Prisma
+apps/api/prisma/migrations/dev.db
+
+# Misc
+*.tsbuildinfo
+
+# Generated config output (emitted by `tsc -b` on tsconfig.node.json)
+apps/web/vite.config.js
+apps/web/vite.config.d.ts
+
+# Knowledge-graph output (generated, not source)
+graphify-out/

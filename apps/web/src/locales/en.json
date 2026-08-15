@@ -1,0 +1,40 @@
+{
+  "app": {
+    "name": "Church Management System"
+  },
+  "nav": {
+    "home": "Home",
+    "profile": "About",
+    "divisions": "Divisions",
+    "timeline": "Activities",
+    "login": "Log in"
+  },
+  "landing": {
+    "hero": {
+      "title": "Welcome",
+      "tagline": "Serving the congregation with heart.",
+      "cta": "Learn More"
+    },
+    "timeline": {
+      "title": "Activities & Projects",
+      "filter": {
+        "all": "All",
+        "planned": "Planned",
+        "ongoing": "Ongoing",
+        "done": "Done"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Sign in",
+      "email": "Email",
+      "password": "Password",
+      "remember": "Remember me",
+      "submit": "Sign in",
+      "submitting": "Signing in...",
+      "error": "Incorrect email or password.",
+      "forgot": "Forgot password? Contact your Admin."
+    }
+  }
+}
