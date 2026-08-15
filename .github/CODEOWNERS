@@ -1,21 +1,15 @@
 # Code owners are requested for review automatically, and are required
-# reviewers on protected branches.
+# reviewers on protected branches. GitHub resolves ownership by LAST
+# matching pattern in this file, so more specific rules must appear below
+# more general ones to take priority.
 #
-# Until the other three collaborators join, everything is owned by the lead.
-# As each person is onboarded, uncomment their slice below and remove the
-# corresponding coverage from the catch-all.
+# Until the other three collaborators join, everything falls to the
+# catch-all below (the lead). As each person is onboarded, uncomment their
+# slice — nothing needs to be removed from the catch-all, it only applies
+# where nothing more specific matches.
 
 # Catch-all
 *                                   @jpangala
-
-# ── Cross-cutting: always lead review, regardless of who owns the slice ──
-/.github/                           @jpangala
-/packages/shared/                   @jpangala
-/apps/api/src/common/               @jpangala
-/apps/api/prisma/schema.prisma      @jpangala
-/apps/web/src/components/shared/    @jpangala
-/apps/web/src/lib/                  @jpangala
-/eslint.config.mjs                  @jpangala
 
 # ── Domain slices (uncomment as collaborators join) ──────────────────────
 # Identity & Access
@@ -41,3 +35,14 @@
 # Finance
 # /apps/api/src/modules/finance/    @dev-finance
 # /apps/web/src/features/finance/   @dev-finance
+
+# ── Cross-cutting: always lead review, regardless of who owns the slice ──
+# Placed last so it wins over any domain-slice pattern above, structurally
+# (not just because none of today's paths happen to overlap).
+/.github/                           @jpangala
+/packages/shared/                   @jpangala
+/apps/api/src/common/               @jpangala
+/apps/api/prisma/schema.prisma      @jpangala
+/apps/web/src/components/shared/    @jpangala
+/apps/web/src/lib/                  @jpangala
+/eslint.config.mjs                  @jpangala
