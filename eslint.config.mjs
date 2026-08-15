@@ -46,6 +46,53 @@ export default tseslint.config(
     rules: { ...reactHooks.configs.recommended.rules },
   },
 
+  // ── Boundary: controllers must never touch Prisma. ───────────────────────
+  {
+    files: ["apps/api/src/**/*.controller.ts"],
+    rules: {
+      "@typescript-eslint/no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: ["**/prisma/prisma.service", "@prisma/client"],
+              message:
+                "Controllers delegate to services. Data access belongs in *.service.ts.",
+              allowTypeImports: true,
+            },
+          ],
+        },
+      ],
+    },
+  },
+
+  // ── Boundary: packages/shared must stay framework-free. ──────────────────
+  // Both apps import it; a framework import here breaks one of them.
+  {
+    files: ["packages/shared/**/*.ts"],
+    rules: {
+      "@typescript-eslint/no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: [
+                "@nestjs/*",
+                "react",
+                "react-*",
+                "axios",
+                "express",
+                "@prisma/client",
+              ],
+              message:
+                "packages/shared must import no framework — both apps depend on it.",
+            },
+          ],
+        },
+      ],
+    },
+  },
+
   // Tests may use non-null assertions and loose mock shapes.
   {
     files: ["**/*.spec.ts", "**/*.spec.tsx"],
