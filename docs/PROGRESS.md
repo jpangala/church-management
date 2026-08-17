@@ -104,7 +104,7 @@ Design spec: `docs/superpowers/specs/2026-08-15-team-dev-foundation-design.md`
 - [x] Vitest in both apps
 - [x] CI (`verify`): lint → typecheck → test → build
 - [x] CODEOWNERS, PR template, CONTRIBUTING.md
-- [x] Branch protection: `main` requires `verify` + 1 code-owner approval; `dev` requires `verify`. Approval requirement on `dev` switches on when a second collaborator joins.
+- [x] Branch protection: both `main` and `dev` require a PR + green `verify` check; the approval-count requirement is temporarily 0 on both (GitHub can't satisfy "1 approval" for a solo developer's own PR) and switches to 1 on `main` once a second collaborator joins.
 - [ ] Structural refactor — see `docs/superpowers/plans/2026-08-15-structural-refactor.md`
 
 ## Quick Resume Checklist
