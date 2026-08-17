@@ -99,11 +99,12 @@ Don't gate Phase 2 on this. Continue with the local prototype now; revisit Figma
 
 Design spec: `docs/superpowers/specs/2026-08-15-team-dev-foundation-design.md`
 
-- [x] Git repository (local) — public GitHub remote pending
+- [x] Git repository — public GitHub remote: https://github.com/jpangala/church-management
 - [x] Node 22 pinned, ESLint + Prettier, boundary lint rules
 - [x] Vitest in both apps
 - [x] CI (`verify`): lint → typecheck → test → build
 - [x] CODEOWNERS, PR template, CONTRIBUTING.md
+- [x] Branch protection: `main` requires `verify` + 1 code-owner approval; `dev` requires `verify`. Approval requirement on `dev` switches on when a second collaborator joins.
 - [ ] Structural refactor — see `docs/superpowers/plans/2026-08-15-structural-refactor.md`
 
 ## Quick Resume Checklist
