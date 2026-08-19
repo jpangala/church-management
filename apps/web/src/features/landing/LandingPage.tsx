@@ -15,7 +15,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-md bg-primary" aria-hidden />
             <span className="font-display text-xl text-primary">
-              Gereja XYZ
+              GKI Bogor Baru
             </span>
           </div>
           <nav className="flex items-center gap-6 text-sm">
@@ -25,7 +25,7 @@ export default function LandingPage() {
             <a href="#divisions" className="hover:text-primary">
               {t("nav.divisions")}
             </a>
-            <a href="#timeline" className="hover:text-primary">
+            <a href="#timelinße" className="hover:text-primary">
               {t("nav.timeline")}
             </a>
             <button
@@ -97,7 +97,7 @@ export default function LandingPage() {
 
       <footer className="border-t border-border bg-primary py-8 text-primary-foreground">
         <div className="container text-sm">
-          <p>Gereja XYZ · Jl. Contoh No. 1</p>
+          <p>Gereja GKI Bogor Baru · Jl. Contoh No. 1</p>
           <p className="mt-2 opacity-70">© 2026 · Church Management System</p>
         </div>
       </footer>
