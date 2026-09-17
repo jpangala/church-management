@@ -2,6 +2,9 @@
 
 **Owner:** repo lead. Every domain depends on these.
 
+**Full reference with props and examples: [`docs/UI_KIT.md`](../../../../../docs/UI_KIT.md).**
+This file only covers ownership; that one covers how to use each component.
+
 22 components used across all four domain modules: `DataTable`, `Pagination`, `FormShell`,
 `FormSection`, `FormActionBar`, `Field`, `Panel`, `StatCard`, `PageHeader`, `Toolbar`,
 `BulkActionBar`, `EmptyState`, `RadioCardGroup`, `Sidebar`, `TopBar`, `DashboardLayout`,
