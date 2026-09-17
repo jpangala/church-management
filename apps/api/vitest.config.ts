@@ -1,4 +1,5 @@
 import { defineConfig } from "vitest/config";
+import path from "node:path";
 
 export default defineConfig({
   test: {
@@ -9,5 +10,10 @@ export default defineConfig({
       "prisma/**/*.spec.ts",
       "prisma/**/*.test.ts",
     ],
+  },
+  resolve: {
+    alias: {
+      "@church/shared": path.resolve(__dirname, "../../packages/shared/src"),
+    },
   },
 });

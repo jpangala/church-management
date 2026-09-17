@@ -1,10 +1,10 @@
-export type UserRole = "ADMIN" | "FINANCE" | "DIVISION_LEADER";
+import type { Role } from "@church/shared";
 
 export interface AuthUser {
   id: string;
   email: string;
   name: string;
-  role: UserRole;
+  role: Role;
 }
 
 export interface LoginResponse {

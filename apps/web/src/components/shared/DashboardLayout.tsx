@@ -1,9 +1,9 @@
 import Sidebar from "./Sidebar";
 import AmbientBackdrop from "./AmbientBackdrop";
-import type { UserRole } from "@/features/identity/auth.types";
+import type { Role } from "@church/shared";
 
 interface Props {
-  role: UserRole;
+  role: Role;
   children: React.ReactNode;
 }
 
