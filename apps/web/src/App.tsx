@@ -1,14 +1,14 @@
 import { Navigate, Routes, Route } from "react-router-dom";
-import { AuthProvider } from "./features/auth/auth.context";
-import PrivateRoute from "./features/auth/PrivateRoute";
+import { AuthProvider } from "./features/identity/auth.context";
+import PrivateRoute from "./features/identity/PrivateRoute";
 import ScrollToTop from "./lib/ScrollToTop";
 import LandingPage from "./features/landing/LandingPage";
-import LoginPage from "./features/auth/LoginPage";
-import AdminDashboard from "./features/dashboard/admin/AdminDashboard";
-import UsersListPage from "./features/dashboard/admin/UsersListPage";
-import UserFormPage from "./features/dashboard/admin/UserFormPage";
-import FinanceDashboard from "./features/dashboard/finance/FinanceDashboard";
-import DivisionDashboard from "./features/dashboard/division/DivisionDashboard";
+import LoginPage from "./features/identity/LoginPage";
+import AdminDashboard from "./features/dashboards/AdminDashboard";
+import UsersListPage from "./features/identity/UsersListPage";
+import UserFormPage from "./features/identity/UserFormPage";
+import FinanceDashboard from "./features/dashboards/FinanceDashboard";
+import DivisionDashboard from "./features/dashboards/DivisionDashboard";
 
 export default function App() {
   return (

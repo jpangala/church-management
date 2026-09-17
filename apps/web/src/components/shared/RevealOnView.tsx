@@ -1,4 +1,4 @@
-import { useReveal } from "../lib/useReveal";
+import { useReveal } from "./useReveal";
 
 interface Props {
   children: React.ReactNode;

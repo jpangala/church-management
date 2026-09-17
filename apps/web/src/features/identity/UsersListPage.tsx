@@ -1,15 +1,15 @@
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import DashboardLayout from "../components/DashboardLayout";
-import TopBar from "../components/TopBar";
-import PageHeader from "../components/PageHeader";
-import Toolbar from "../components/Toolbar";
-import DataTable, { type Column } from "../components/DataTable";
-import EmptyState from "../components/EmptyState";
-import Pagination from "../components/Pagination";
-import BulkActionBar from "../components/BulkActionBar";
-import IslandButton from "../components/IslandButton";
-import RevealOnView from "../components/RevealOnView";
+import DashboardLayout from "@/components/shared/DashboardLayout";
+import TopBar from "@/components/shared/TopBar";
+import PageHeader from "@/components/shared/PageHeader";
+import Toolbar from "@/components/shared/Toolbar";
+import DataTable, { type Column } from "@/components/shared/DataTable";
+import EmptyState from "@/components/shared/EmptyState";
+import Pagination from "@/components/shared/Pagination";
+import BulkActionBar from "@/components/shared/BulkActionBar";
+import IslandButton from "@/components/shared/IslandButton";
+import RevealOnView from "@/components/shared/RevealOnView";
 import {
   Plus,
   Users as UsersIcon,
@@ -17,7 +17,7 @@ import {
   Pencil,
   Trash,
   Check,
-} from "../components/icons";
+} from "@/components/shared/icons";
 
 type Role = "ADMIN" | "FINANCE" | "DIVISION_LEADER";
 

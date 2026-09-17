@@ -41,18 +41,36 @@ CI runs exactly these four, in this order, plus `prisma generate` first. If they
 
 ## Where things go
 
-**This is the target structure, not what exists today.** A structural refactor (tracked in `docs/superpowers/plans/`) moves the codebase from its current single-module shape (everything lives under `apps/api/src/auth/`, `apps/web/src/features/dashboard/`, and flat files in `packages/shared/src/`) to the layout below. Until that lands, follow the existing patterns you find in those folders rather than looking for paths that don't exist yet.
+The codebase is organised into four **domain modules**, one per owner, mirrored on the API and
+web sides. [`.github/CODEOWNERS`](.github/CODEOWNERS) maps each folder to the person responsible
+for it, so the path you are editing tells you whose review you will need.
+
+| Module     | Models                                                     |
+| ---------- | ---------------------------------------------------------- |
+| `identity` | `User`, `Division`, `AuditLog`                             |
+| `members`  | `Member`, `Project`                                        |
+| `bookings` | `Booking`, `BookingRoom`, `BookingItem`, `Room`, `Item`    |
+| `finance`  | `FinanceCategory`, `IncomeEntry`, `ExpenseEntry`, `Budget` |
 
 | You are adding                             | It goes in                                             |
 | ------------------------------------------ | ------------------------------------------------------ |
-| An API endpoint                            | `apps/api/src/modules/<domain>/<domain>.controller.ts` |
-| Business logic                             | `apps/api/src/modules/<domain>/<domain>.service.ts`    |
-| A request/response shape used by both apps | `packages/shared/src/<domain>/`                        |
-| A screen                                   | `apps/web/src/features/<domain>/`                      |
-| An API call from the web app               | `apps/web/src/features/<domain>/api.ts`                |
-| A data hook                                | `apps/web/src/features/<domain>/queries.ts`            |
-| A component only your domain uses          | `apps/web/src/features/<domain>/components/`           |
-| A component every domain could use         | `apps/web/src/components/shared/`                      |
+| An API endpoint                            | `apps/api/src/modules/<module>/<entity>.controller.ts` |
+| Business logic                             | `apps/api/src/modules/<module>/<entity>.service.ts`    |
+| Cross-cutting API infrastructure           | `apps/api/src/common/`                                 |
+| A request/response shape used by both apps | `packages/shared/src/<module>/`                        |
+| A screen                                   | `apps/web/src/features/<module>/`                      |
+| An API call from the web app               | `apps/web/src/features/<module>/api.ts`                |
+| A data hook                                | `apps/web/src/features/<module>/queries.ts`            |
+| A component only your module uses          | `apps/web/src/features/<module>/components/`           |
+| A component every module could use         | `apps/web/src/components/shared/`                      |
+
+Two folders are cross-cutting and lead-owned: `apps/web/src/components/shared/` (the 22-component
+UI kit every module depends on) and `apps/web/src/features/dashboards/` (the three role landing
+pages, which aggregate data from every module). Each has a README explaining how to contribute to
+one without owning it. `apps/web/src/features/landing/` is unassigned for now.
+
+Every module folder has a README listing the models it owns and the screens or endpoints still to
+build. Read yours before starting.
 
 ## Rules the linter enforces
 
@@ -61,7 +79,7 @@ These fail CI, so you will find out immediately:
 - Controllers may not import `PrismaService` or `@prisma/client`. Data access belongs in the service.
 - `packages/shared` may not import NestJS, React, axios, express, or Prisma. Both apps depend on it, so it stays framework-free.
 
-(Cross-feature import boundaries and the api.ts-only-import-apiClient rule are coming in a follow-up structural refactor — the current folder layout doesn't support enforcing them yet.)
+(Cross-module import boundaries and the `api.ts`-only-imports-`apiClient` rule are not switched on yet. The folder layout now supports them — see the deferred blocks in `eslint.config.mjs`.)
 
 ## Tests
 
