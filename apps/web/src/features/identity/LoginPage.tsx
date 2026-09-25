@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "./auth.context";
-import type { UserRole } from "./auth.types";
+import type { Role } from "@church/shared";
 
-const ROLE_HOME: Record<UserRole, string> = {
+const ROLE_HOME: Record<Role, string> = {
   ADMIN: "/admin",
   FINANCE: "/finance",
   DIVISION_LEADER: "/division",

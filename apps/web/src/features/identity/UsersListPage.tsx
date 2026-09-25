@@ -1,3 +1,4 @@
+import type { Role } from "@church/shared";
 import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardLayout from "@/components/shared/DashboardLayout";
@@ -18,8 +19,6 @@ import {
   Trash,
   Check,
 } from "@/components/shared/icons";
-
-type Role = "ADMIN" | "FINANCE" | "DIVISION_LEADER";
 
 interface User {
   id: string;

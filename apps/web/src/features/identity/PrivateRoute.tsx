@@ -1,10 +1,10 @@
 import { Navigate } from "react-router-dom";
 import { useAuth } from "./auth.context";
-import type { UserRole } from "./auth.types";
+import type { Role } from "@church/shared";
 
 interface Props {
   children: React.ReactNode;
-  allowedRoles?: UserRole[];
+  allowedRoles?: Role[];
 }
 
 export default function PrivateRoute({ children, allowedRoles }: Props) {

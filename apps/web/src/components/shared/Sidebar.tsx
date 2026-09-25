@@ -16,7 +16,7 @@ import {
   Globe,
   Sparkles,
 } from "./icons";
-import type { UserRole } from "@/features/identity/auth.types";
+import type { Role } from "@church/shared";
 
 interface NavItem {
   to: string;
@@ -24,7 +24,7 @@ interface NavItem {
   icon: React.ReactNode;
 }
 
-const NAV: Record<UserRole, { section: string; items: NavItem[] }[]> = {
+const NAV: Record<Role, { section: string; items: NavItem[] }[]> = {
   ADMIN: [
     {
       section: "Overview",
@@ -84,20 +84,20 @@ const NAV: Record<UserRole, { section: string; items: NavItem[] }[]> = {
   ],
 };
 
-const ROLE_TITLE: Record<UserRole, string> = {
+const ROLE_TITLE: Record<Role, string> = {
   ADMIN: "Admin Console",
   FINANCE: "Finance Office",
   DIVISION_LEADER: "Division Lead",
 };
 
-const ROLE_SUBTITLE: Record<UserRole, string> = {
+const ROLE_SUBTITLE: Record<Role, string> = {
   ADMIN: "System-wide oversight",
   FINANCE: "Stewardship & ledgers",
   DIVISION_LEADER: "Your division",
 };
 
 interface Props {
-  role: UserRole;
+  role: Role;
 }
 
 export default function Sidebar({ role }: Props) {
