@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "./auth.context";
 import type { Role } from "@church/shared";
+import { CHURCH_NAME } from "@/lib/church";
 
 const ROLE_HOME: Record<Role, string> = {
   ADMIN: "/admin",
@@ -52,7 +53,7 @@ export default function LoginPage() {
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-md bg-primary" aria-hidden />
             <span className="font-display text-xl text-primary">
-              Gereja XYZ
+              {CHURCH_NAME}
             </span>
           </div>
           <button

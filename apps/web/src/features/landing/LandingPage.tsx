@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { CHURCH_NAME } from "@/lib/church";
 
 export default function LandingPage() {
   const { t, i18n } = useTranslation();
@@ -15,7 +16,7 @@ export default function LandingPage() {
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-md bg-primary" aria-hidden />
             <span className="font-display text-xl text-primary">
-              Gereja XYZ
+              {CHURCH_NAME}
             </span>
           </div>
           <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm sm:gap-x-6">
@@ -100,7 +101,7 @@ export default function LandingPage() {
 
       <footer className="border-t border-border bg-primary py-8 text-primary-foreground">
         <div className="container text-sm">
-          <p>Gereja XYZ · Jl. Contoh No. 1</p>
+          <p>{CHURCH_NAME} · Jl. Contoh No. 1</p>
           <p className="mt-2 opacity-70">© 2026 · Church Management System</p>
         </div>
       </footer>
