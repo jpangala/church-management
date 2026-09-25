@@ -69,6 +69,10 @@ UI kit every module depends on) and `apps/web/src/features/dashboards/` (the thr
 pages, which aggregate data from every module). Each has a README explaining how to contribute to
 one without owning it. `apps/web/src/features/landing/` is unassigned for now.
 
+The shared UI kit is documented component by component, with props and worked examples, in
+[`docs/UI_KIT.md`](docs/UI_KIT.md). Read it before building a screen — most of what you need
+already exists.
+
 Every module folder has a README listing the models it owns and the screens or endpoints still to
 build. Read yours before starting.
 
