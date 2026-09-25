@@ -240,6 +240,10 @@ feat/<domain>-<thing>   ← your branch, made fresh for each task.
 
 ---
 
+> **Before your first real task, do the [practice drill](PRACTICE_DRILL.md).** It's a throwaway
+> feature that walks you through this whole loop, using every UI component, and has you break
+> CI on purpose so you know what a failure looks like.
+
 ## 8. Your first change, end to end
 
 This walks through one full cycle — do this for every task from now on.
@@ -320,10 +324,12 @@ git push -u origin feat/<domain>-<short-description>
 
 ## 10. Reference
 
-| Doc                                         | What's in it                                                                 |
-| ------------------------------------------- | ---------------------------------------------------------------------------- |
-| [`README.md`](../README.md)                 | Stack overview, full script list                                             |
-| [`CONTRIBUTING.md`](../CONTRIBUTING.md)     | Branch/commit conventions, folder map, lint rules, test conventions          |
-| [`docs/GIT_REFERENCE.md`](GIT_REFERENCE.md) | Every Git/GitHub word and command explained, with examples and a cheat sheet |
-| [`docs/CI_GUIDE.md`](CI_GUIDE.md)           | What CI checks, the PR approval gate, debugging a failed check               |
-| [`docs/PROGRESS.md`](PROGRESS.md)           | Current project status                                                       |
+| Doc                                           | What's in it                                                                                       |
+| --------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| [`README.md`](../README.md)                   | Stack overview, full script list                                                                   |
+| [`CONTRIBUTING.md`](../CONTRIBUTING.md)       | Branch/commit conventions, folder map, lint rules, test conventions                                |
+| [`docs/GIT_REFERENCE.md`](GIT_REFERENCE.md)   | Every Git/GitHub word and command explained, with examples and a cheat sheet                       |
+| [`docs/UI_KIT.md`](UI_KIT.md)                 | The 22 shared UI components: props, examples, gotchas, responsive rules                            |
+| [`docs/PRACTICE_DRILL.md`](PRACTICE_DRILL.md) | A 2–3 hour practice feature: uses every UI component, and walks you through breaking and fixing CI |
+| [`docs/CI_GUIDE.md`](CI_GUIDE.md)             | What CI checks, the PR approval gate, debugging a failed check                                     |
+| [`docs/PROGRESS.md`](PROGRESS.md)             | Current project status                                                                             |
