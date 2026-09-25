@@ -59,6 +59,8 @@ for it, so the path you are editing tells you whose review you will need.
 | Cross-cutting API infrastructure           | `apps/api/src/common/`                                 |
 | A request/response shape used by both apps | `packages/shared/src/<module>/`                        |
 | A screen                                   | `apps/web/src/features/<module>/`                      |
+| The route for that screen                  | `apps/web/src/features/<module>/routes.tsx`            |
+| Its sidebar link                           | `apps/web/src/features/<module>/nav.tsx`               |
 | An API call from the web app               | `apps/web/src/features/<module>/api.ts`                |
 | A data hook                                | `apps/web/src/features/<module>/queries.ts`            |
 | A component only your module uses          | `apps/web/src/features/<module>/components/`           |

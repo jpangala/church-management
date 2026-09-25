@@ -42,4 +42,6 @@
 /apps/web/src/components/shared/       @jpangala
 /apps/web/src/features/dashboards/     @jpangala
 /apps/web/src/lib/                     @jpangala
+/apps/web/src/app/                     @jpangala
+/apps/web/src/App.tsx                  @jpangala
 /eslint.config.mjs                     @jpangala

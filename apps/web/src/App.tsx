@@ -4,11 +4,7 @@ import PrivateRoute from "./features/identity/PrivateRoute";
 import ScrollToTop from "./lib/ScrollToTop";
 import LandingPage from "./features/landing/LandingPage";
 import LoginPage from "./features/identity/LoginPage";
-import AdminDashboard from "./features/dashboards/AdminDashboard";
-import UsersListPage from "./features/identity/UsersListPage";
-import UserFormPage from "./features/identity/UserFormPage";
-import FinanceDashboard from "./features/dashboards/FinanceDashboard";
-import DivisionDashboard from "./features/dashboards/DivisionDashboard";
+import { MODULE_ROUTES } from "./app/routes";
 
 export default function App() {
   return (
@@ -18,62 +14,15 @@ export default function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
 
-        <Route
-          path="/admin"
-          element={
-            <PrivateRoute allowedRoles={["ADMIN"]}>
-              <AdminDashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin/users"
-          element={
-            <PrivateRoute allowedRoles={["ADMIN"]}>
-              <UsersListPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin/users/new"
-          element={
-            <PrivateRoute allowedRoles={["ADMIN"]}>
-              <UserFormPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin/users/:id"
-          element={
-            <PrivateRoute allowedRoles={["ADMIN"]}>
-              <UserFormPage />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/admin/*"
-          element={
-            <PrivateRoute allowedRoles={["ADMIN"]}>
-              <AdminDashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/finance/*"
-          element={
-            <PrivateRoute allowedRoles={["FINANCE"]}>
-              <FinanceDashboard />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/division/*"
-          element={
-            <PrivateRoute allowedRoles={["DIVISION_LEADER"]}>
-              <DivisionDashboard />
-            </PrivateRoute>
-          }
-        />
+        {MODULE_ROUTES.map((r) => (
+          <Route
+            key={r.path}
+            path={r.path}
+            element={
+              <PrivateRoute allowedRoles={r.roles}>{r.element}</PrivateRoute>
+            }
+          />
+        ))}
 
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="*" element={<Navigate to="/" replace />} />

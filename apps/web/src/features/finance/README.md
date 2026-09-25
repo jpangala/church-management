@@ -12,6 +12,9 @@
 | `/finance/budgets`    | Budget planning vs actual |
 | `/finance/reports`    | PDF export, church header |
 
+All five are already linked from the sidebar (see `./nav.tsx`). Register each page in
+`./routes.tsx` as you build it.
+
 The finance **dashboard** at `/finance` is not here — role dashboards live in `../dashboards/`.
 
 ## Conventions
