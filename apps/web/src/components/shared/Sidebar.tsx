@@ -4,6 +4,7 @@ import { Globe, X } from "./icons";
 import { useMobileNav } from "./mobileNav";
 import { navFor } from "@/app/navigation";
 import type { Role } from "@church/shared";
+import { CHURCH_NAME } from "@/lib/church";
 
 const ROLE_TITLE: Record<Role, string> = {
   ADMIN: "Admin Console",
@@ -94,7 +95,7 @@ function SidebarPanel({ role, onClose }: Props & { onClose?: () => void }) {
           </span>
           <div className="leading-tight">
             <p className="font-editorial text-[15px] font-medium text-foreground">
-              Gereja XYZ
+              {CHURCH_NAME}
             </p>
             <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
               {ROLE_TITLE[role]}

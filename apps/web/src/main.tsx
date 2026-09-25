@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./lib/i18n";
 import "./styles/globals.css";
 import App from "./App";
+import { CHURCH_NAME } from "./lib/church";
+
+document.title = `${CHURCH_NAME} — Sistem Manajemen`;
 
 const queryClient = new QueryClient({
   defaultOptions: {
