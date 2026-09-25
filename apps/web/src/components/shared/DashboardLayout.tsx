@@ -1,6 +1,6 @@
 import Sidebar from "./Sidebar";
 import AmbientBackdrop from "./AmbientBackdrop";
-import type { UserRole } from "../../auth/auth.types";
+import type { UserRole } from "@/features/identity/auth.types";
 
 interface Props {
   role: UserRole;

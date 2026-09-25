@@ -16,7 +16,7 @@ import {
   Globe,
   Sparkles,
 } from "./icons";
-import type { UserRole } from "../../auth/auth.types";
+import type { UserRole } from "@/features/identity/auth.types";
 
 interface NavItem {
   to: string;

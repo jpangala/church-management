@@ -1,11 +1,11 @@
-import { useAuth } from "../../auth/auth.context";
-import DashboardLayout from "../components/DashboardLayout";
-import TopBar from "../components/TopBar";
-import Panel from "../components/Panel";
-import StatCard from "../components/StatCard";
-import Eyebrow from "../components/Eyebrow";
-import IslandButton from "../components/IslandButton";
-import RevealOnView from "../components/RevealOnView";
+import { useAuth } from "@/features/identity/auth.context";
+import DashboardLayout from "@/components/shared/DashboardLayout";
+import TopBar from "@/components/shared/TopBar";
+import Panel from "@/components/shared/Panel";
+import StatCard from "@/components/shared/StatCard";
+import Eyebrow from "@/components/shared/Eyebrow";
+import IslandButton from "@/components/shared/IslandButton";
+import RevealOnView from "@/components/shared/RevealOnView";
 import {
   Users,
   Layers,
@@ -17,7 +17,7 @@ import {
   Plus,
   Dots,
   ChevronRight,
-} from "../components/icons";
+} from "@/components/shared/icons";
 
 // Mock data — replace with API queries when those modules ship.
 const STATS = [

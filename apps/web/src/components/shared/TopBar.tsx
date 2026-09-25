@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../auth/auth.context";
+import { useAuth } from "@/features/identity/auth.context";
 import { Search, Bell, Logout, ChevronRight } from "./icons";
 
 interface Props {

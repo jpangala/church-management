@@ -1,16 +1,16 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import DashboardLayout from "../components/DashboardLayout";
-import TopBar from "../components/TopBar";
-import PageHeader from "../components/PageHeader";
-import FormShell from "../components/FormShell";
-import FormSection from "../components/FormSection";
-import FormActionBar from "../components/FormActionBar";
-import Field from "../components/Field";
-import { TextInput, Textarea, Select, Switch } from "../components/inputs";
-import RadioCardGroup from "../components/RadioCardGroup";
-import IslandButton from "../components/IslandButton";
-import RevealOnView from "../components/RevealOnView";
+import DashboardLayout from "@/components/shared/DashboardLayout";
+import TopBar from "@/components/shared/TopBar";
+import PageHeader from "@/components/shared/PageHeader";
+import FormShell from "@/components/shared/FormShell";
+import FormSection from "@/components/shared/FormSection";
+import FormActionBar from "@/components/shared/FormActionBar";
+import Field from "@/components/shared/Field";
+import { TextInput, Textarea, Select, Switch } from "@/components/shared/inputs";
+import RadioCardGroup from "@/components/shared/RadioCardGroup";
+import IslandButton from "@/components/shared/IslandButton";
+import RevealOnView from "@/components/shared/RevealOnView";
 import {
   Check,
   Mail,
@@ -18,7 +18,7 @@ import {
   User as UserIcon,
   Layers,
   ChartLine,
-} from "../components/icons";
+} from "@/components/shared/icons";
 
 interface FormState {
   name: string;

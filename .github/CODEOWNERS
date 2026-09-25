@@ -3,46 +3,43 @@
 # matching pattern in this file, so more specific rules must appear below
 # more general ones to take priority.
 #
-# Until the other three collaborators join, everything falls to the
-# catch-all below (the lead). As each person is onboarded, uncomment their
-# slice — nothing needs to be removed from the catch-all, it only applies
-# where nothing more specific matches.
+# The codebase is split into four domain modules, one per contributor,
+# mirrored on the API and web sides. Until the other three collaborators
+# join, everything falls to the catch-all below (the lead). As each person
+# is onboarded, uncomment their two lines and replace the placeholder with
+# their real GitHub username.
+#
+# NOTE: these must be individual @usernames. @org/team handles do not
+# resolve on a personal repository — only inside a GitHub Organization.
 
 # Catch-all
-*                                   @jpangala
+*                                      @jpangala
 
-# ── Domain slices (uncomment as collaborators join) ──────────────────────
-# Identity & Access
-# /apps/api/src/modules/auth/       @dev-identity
-# /apps/api/src/modules/users/      @dev-identity
-# /apps/api/src/modules/divisions/  @dev-identity
-# /apps/api/src/modules/audit/      @dev-identity
-# /apps/web/src/features/admin/     @dev-identity
+# ── Domain modules (uncomment as collaborators join) ─────────────────────
+# Identity & Access — User, Division, AuditLog
+# /apps/api/src/modules/identity/       @username-a
+# /apps/web/src/features/identity/      @username-a
 
-# Members & Projects
-# /apps/api/src/modules/members/    @dev-members
-# /apps/api/src/modules/projects/   @dev-members
-# /apps/web/src/features/members/   @dev-members
-# /apps/web/src/features/projects/  @dev-members
+# Members & Projects — Member, Project
+# /apps/api/src/modules/members/        @username-b
+# /apps/web/src/features/members/       @username-b
 
-# Bookings & Assets
-# /apps/api/src/modules/bookings/   @dev-bookings
-# /apps/api/src/modules/rooms/      @dev-bookings
-# /apps/api/src/modules/items/      @dev-bookings
-# /apps/web/src/features/bookings/  @dev-bookings
-# /apps/web/src/features/assets/    @dev-bookings
+# Bookings & Assets — Booking, BookingRoom, BookingItem, Room, Item
+# /apps/api/src/modules/bookings/       @username-c
+# /apps/web/src/features/bookings/      @username-c
 
-# Finance
-# /apps/api/src/modules/finance/    @dev-finance
-# /apps/web/src/features/finance/   @dev-finance
+# Finance — FinanceCategory, IncomeEntry, ExpenseEntry, Budget
+# /apps/api/src/modules/finance/        @username-d
+# /apps/web/src/features/finance/       @username-d
 
 # ── Cross-cutting: always lead review, regardless of who owns the slice ──
-# Placed last so it wins over any domain-slice pattern above, structurally
+# Placed last so it wins over any domain-module pattern above, structurally
 # (not just because none of today's paths happen to overlap).
-/.github/                           @jpangala
-/packages/shared/                   @jpangala
-/apps/api/src/common/               @jpangala
-/apps/api/prisma/schema.prisma      @jpangala
-/apps/web/src/components/shared/    @jpangala
-/apps/web/src/lib/                  @jpangala
-/eslint.config.mjs                  @jpangala
+/.github/                              @jpangala
+/packages/shared/                      @jpangala
+/apps/api/src/common/                  @jpangala
+/apps/api/prisma/schema.prisma         @jpangala
+/apps/web/src/components/shared/       @jpangala
+/apps/web/src/features/dashboards/     @jpangala
+/apps/web/src/lib/                     @jpangala
+/eslint.config.mjs                     @jpangala

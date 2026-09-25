@@ -3,7 +3,7 @@ import { JwtService } from "@nestjs/jwt";
 import { ConfigService } from "@nestjs/config";
 import { Role } from "@prisma/client";
 import * as argon2 from "argon2";
-import { PrismaService } from "../prisma/prisma.service";
+import { PrismaService } from "../../common/prisma/prisma.service";
 import { LoginDto } from "./dto/login.dto";
 
 interface TokenPayload {
