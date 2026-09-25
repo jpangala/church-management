@@ -10,7 +10,8 @@
 | `/division/members`  | Members scoped to the leader's division          |
 | `/division/projects` | Project list + form, `ProjectStatus` transitions |
 
-All three are already linked from the sidebar and currently 404.
+All three are already linked from the sidebar (see `./nav.tsx`). Until a page exists they fall
+through to the role's dashboard. Register each page in `./routes.tsx` as you build it.
 
 ## Conventions
 

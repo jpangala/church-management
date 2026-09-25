@@ -72,11 +72,37 @@ Rendered by `DashboardLayout`; you should not mount it directly.
 | ------ | ------ |
 | `role` | `Role` |
 
-**Read this before adding a route.** The navigation is a hardcoded
-`Record<Role, { section, items }[]>` inside `Sidebar.tsx`. Adding a screen to the nav means
-editing a lead-owned file, so it needs a review from the lead rather than being something you
-can land inside your own module. Flag it early — it is the most likely place four people's
-work collides.
+**You don't edit `Sidebar.tsx` to add a link.** Each module declares its own links in
+`features/<module>/nav.tsx`, and `app/navigation.ts` combines them:
+
+```tsx
+// features/finance/nav.tsx
+export const financeNav: NavEntry[] = [
+  {
+    role: "FINANCE",
+    section: "Ledger",
+    to: "/finance/income",
+    label: "Income",
+    icon: <ArrowUp />,
+  },
+];
+```
+
+`section` must be one that `app/navigation.ts` already declares for that role. That list of
+sections, and their order, is the one lead-owned decision. Get it wrong and
+`app/navigation.spec.ts` fails with the offending entry named.
+
+The page itself goes in `features/<module>/routes.tsx` the same way:
+
+```tsx
+// features/finance/routes.tsx
+export const financeRoutes: ModuleRoute[] = [
+  { path: "/finance/income", roles: ["FINANCE"], element: <IncomePage /> },
+];
+```
+
+Every module route is wrapped in `PrivateRoute` automatically. The spec also fails if two
+modules register the same path, or a route has no roles.
 
 ### `TopBar`
 
@@ -609,7 +635,8 @@ The things that will cost you twenty minutes if you don't know them:
 - **A `sortable` column needs an `accessor`.** `render` returns JSX, which can't be sorted.
 - **`Pagination.total` is the full filtered count**, not the length of the current page.
 - **`DashboardLayout` already renders `Sidebar` and `AmbientBackdrop`.** Don't mount them again.
-- **Adding a nav entry means editing `Sidebar.tsx`**, which is lead-owned. Plan for a review.
+- **Add sidebar links in your module's `nav.tsx`, not `Sidebar.tsx`.** A new _section_ is
+  the only change that needs the lead.
 - **`IslandButton` defaults to a submit button inside a form.** Set `type="button"` on Cancel.
 - **Money is formatted with `formatIDR`** from `@/lib/utils`, which is unit tested. `StatCard`
   and table cells take an already-formatted string.

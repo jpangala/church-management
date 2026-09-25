@@ -4,11 +4,11 @@
 
 ## Screens to build
 
-| Route                      | Screen                                      |
-| -------------------------- | ------------------------------------------- |
-| `/division/bookings`       | Booking list, create/cancel, status         |
-| `/division/calendar`       | Calendar view of room and item reservations |
-| _(not in the sidebar yet)_ | Room and item admin — needs a route added   |
+| Route                      | Screen                                                                       |
+| -------------------------- | ---------------------------------------------------------------------------- |
+| `/division/bookings`       | Booking list, create/cancel, status                                          |
+| `/division/calendar`       | Calendar view of room and item reservations                                  |
+| _(not in the sidebar yet)_ | Room and item admin — add a link in `./nav.tsx` and a page in `./routes.tsx` |
 
 The hourly-slot constraint and overlap rejection are enforced server-side. The UI should surface those errors clearly rather than trying to duplicate the rules.
 

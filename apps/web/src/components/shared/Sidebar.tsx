@@ -1,88 +1,7 @@
 import { NavLink } from "react-router-dom";
-import {
-  Grid,
-  Users,
-  Layers,
-  User,
-  Document,
-  Clipboard,
-  Gear,
-  ChartLine,
-  Folder,
-  Tag,
-  Calendar,
-  ArrowUp,
-  ArrowDown,
-  Globe,
-  Sparkles,
-} from "./icons";
+import { Globe } from "./icons";
+import { navFor } from "@/app/navigation";
 import type { Role } from "@church/shared";
-
-interface NavItem {
-  to: string;
-  label: string;
-  icon: React.ReactNode;
-}
-
-const NAV: Record<Role, { section: string; items: NavItem[] }[]> = {
-  ADMIN: [
-    {
-      section: "Overview",
-      items: [
-        { to: "/admin", label: "Dashboard", icon: <Grid /> },
-        { to: "/admin/audit", label: "Audit Log", icon: <Clipboard /> },
-      ],
-    },
-    {
-      section: "Manage",
-      items: [
-        { to: "/admin/users", label: "Users", icon: <Users /> },
-        { to: "/admin/divisions", label: "Divisions", icon: <Layers /> },
-        { to: "/admin/members", label: "Members", icon: <User /> },
-        { to: "/admin/content", label: "Landing Content", icon: <Document /> },
-      ],
-    },
-    {
-      section: "System",
-      items: [{ to: "/admin/settings", label: "Settings", icon: <Gear /> }],
-    },
-  ],
-  FINANCE: [
-    {
-      section: "Overview",
-      items: [
-        { to: "/finance", label: "Dashboard", icon: <Grid /> },
-        { to: "/finance/reports", label: "Reports", icon: <ChartLine /> },
-      ],
-    },
-    {
-      section: "Ledger",
-      items: [
-        { to: "/finance/income", label: "Income", icon: <ArrowUp /> },
-        { to: "/finance/expenses", label: "Expenses", icon: <ArrowDown /> },
-        { to: "/finance/categories", label: "Categories", icon: <Tag /> },
-        { to: "/finance/budgets", label: "Budgets", icon: <Sparkles /> },
-      ],
-    },
-  ],
-  DIVISION_LEADER: [
-    {
-      section: "Overview",
-      items: [
-        { to: "/division", label: "Dashboard", icon: <Grid /> },
-        { to: "/division/calendar", label: "Calendar", icon: <Calendar /> },
-      ],
-    },
-    {
-      section: "Team",
-      items: [
-        { to: "/division/members", label: "Members", icon: <User /> },
-        { to: "/division/projects", label: "Projects", icon: <Folder /> },
-        { to: "/division/bookings", label: "Bookings", icon: <Calendar /> },
-      ],
-    },
-  ],
-};
 
 const ROLE_TITLE: Record<Role, string> = {
   ADMIN: "Admin Console",
@@ -134,7 +53,7 @@ export default function Sidebar({ role }: Props) {
 
           {/* Nav */}
           <nav className="mt-4 flex-1 space-y-6 overflow-y-auto px-3 pb-4">
-            {NAV[role].map((group) => (
+            {navFor(role).map((group) => (
               <div key={group.section}>
                 <p className="px-3 pb-2 text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70">
                   {group.section}
