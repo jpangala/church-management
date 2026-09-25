@@ -1,8 +1,9 @@
 name: CI
 
 on:
+  # Every PR, whatever its base. Stacked PRs target another feature branch
+  # rather than main/dev, and would otherwise get no CI at all.
   pull_request:
-    branches: [main, dev]
   push:
     branches: [main, dev]
 
