@@ -145,6 +145,7 @@ export const Sparkles = make(
   </>,
 );
 
+export const Menu = make(<path d="M4 7h16M4 12h16M4 17h16" />);
 export const Plus = make(<path d="M12 5v14M5 12h14" />);
 export const ChevronRight = make(<path d="m9 5 7 7-7 7" />);
 export const Dots = make(

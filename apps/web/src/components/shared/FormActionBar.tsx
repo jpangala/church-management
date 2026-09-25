@@ -17,10 +17,12 @@ export default function FormActionBar({ children, status }: Props) {
       />
       <div className="rounded-[1.75rem] bg-foreground/[0.035] p-[5px] ring-1 ring-inset ring-foreground/[0.06] shadow-soft-lift backdrop-blur-md">
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-[calc(1.75rem-5px)] bg-surface/90 px-4 py-3 shadow-inner-hairline">
-          <div className="min-w-0 flex-1 text-[12px] text-muted-foreground">
+          <div className="min-w-[12rem] flex-1 text-pretty text-[12px] text-muted-foreground">
             {status}
           </div>
-          <div className="flex items-center gap-2">{children}</div>
+          <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
+            {children}
+          </div>
         </div>
       </div>
     </div>

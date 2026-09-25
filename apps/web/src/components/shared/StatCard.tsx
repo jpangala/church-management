@@ -46,9 +46,11 @@ export default function StatCard({
         )}
       </div>
 
-      <div className="mt-7 flex items-end gap-3">
+      {/* The card is a size container: the number scales with the card's own
+          width, not the screen's, and the badge wraps under it if both won't fit. */}
+      <div className="mt-7 flex flex-wrap items-end gap-x-3 gap-y-2 [container-type:inline-size]">
         <span
-          className={`font-editorial text-5xl font-light leading-none tracking-[-0.02em] ${
+          className={`font-editorial text-[length:clamp(2rem,15cqi,3rem)] font-light leading-none tracking-[-0.02em] ${
             accent ? "text-white" : "text-foreground"
           }`}
         >

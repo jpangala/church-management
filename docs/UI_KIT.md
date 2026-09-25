@@ -49,6 +49,10 @@ those yourself. You give it a `role` and your page body.
 The outermost wrapper for every authenticated screen. Renders the sidebar, the ambient
 background, and a scrolling main column.
 
+Below `md` (768px) the sidebar turns into a slide-out drawer. `DashboardLayout` holds its
+open/closed state (in `mobileNav.tsx`), `TopBar` shows the button that opens it, and `Sidebar`
+renders it. None of that needs anything from your page.
+
 | Prop       | Type        |                                                            |
 | ---------- | ----------- | ---------------------------------------------------------- |
 | `role`     | `Role`      | from `@church/shared`; decides which nav the sidebar shows |
@@ -67,6 +71,9 @@ export default function MembersListPage() {
 ### `Sidebar`
 
 Rendered by `DashboardLayout`; you should not mount it directly.
+
+From `md` up it's a fixed column. Below that it's a drawer, opened from `TopBar`, with the same
+links. The drawer closes on Escape, on a tap outside it, and after navigating.
 
 | Prop   | Type   |
 | ------ | ------ |
@@ -106,7 +113,9 @@ modules register the same path, or a route has no roles.
 
 ### `TopBar`
 
-The strip at the top of the content column.
+The strip at the top of the content column. It wraps rather than squeezing: the breadcrumb
+and caption wrap onto more lines, and the controls move onto their own row when there isn't
+room beside the title. Below `md` it also shows the menu button that opens the sidebar drawer.
 
 | Prop       | Type         |                                               |
 | ---------- | ------------ | --------------------------------------------- |
@@ -308,7 +317,9 @@ Appears when rows are selected.
 
 ### `StatCard`
 
-The KPI tiles across the top of each dashboard.
+The KPI tiles across the top of each dashboard. The number scales with the **card's** width,
+not the screen's (it's a CSS size container), and the trend badge drops below the number when
+both won't fit. So it works in a 4-column row and a 1-column phone layout alike.
 
 | Prop     | Type                                                  |                                                                  |
 | -------- | ----------------------------------------------------- | ---------------------------------------------------------------- |
@@ -433,13 +444,16 @@ Four named exports. `TextInput`, `Textarea` and `Select` extend their native Rea
 
 Large clickable cards instead of radio buttons. Used for role selection on the user form.
 
+`columns` is a **maximum**. Cards never get narrower than 13rem, so in a narrow container they
+reflow onto more rows.
+
 | Prop       | Type                                      | Default |
 | ---------- | ----------------------------------------- | ------- |
 | `name`     | `string`                                  |         |
 | `value`    | `string`                                  |         |
 | `onChange` | `(v: string) => void`                     |         |
 | `options`  | `{ value, label, description?, icon? }[]` |         |
-| `columns`  | `1 \| 2 \| 3`                             |         |
+| `columns`  | `1 \| 2 \| 3`                             | `2`     |
 
 ---
 
@@ -465,15 +479,15 @@ Inside a form, remember `type="button"` on anything that shouldn't submit.
 
 ### `icons.tsx`
 
-36 inline SVGs, each taking standard `SVGProps<SVGSVGElement>`. Check here before adding one —
+37 inline SVGs, each taking standard `SVGProps<SVGSVGElement>`. Check here before adding one —
 the set is broader than it looks:
 
-|                   |                                                                                             |
-| ----------------- | ------------------------------------------------------------------------------------------- |
-| **Navigation**    | `ArrowUp` `ArrowDown` `ArrowLeft` `ArrowUpRight` `ChevronDown` `ChevronLeft` `ChevronRight` |
-| **Actions**       | `Plus` `Pencil` `Trash` `Check` `X` `Upload` `Filter` `SortAsc` `Search` `Dots`             |
-| **Objects**       | `Grid` `Users` `User` `Layers` `Document` `Clipboard` `Folder` `Tag` `Calendar` `ChartLine` |
-| **Status & misc** | `Bell` `Lock` `Logout` `Eye` `Globe` `Mail` `Phone` `Sparkles` `Gear`                       |
+|                   |                                                                                                    |
+| ----------------- | -------------------------------------------------------------------------------------------------- |
+| **Navigation**    | `ArrowUp` `ArrowDown` `ArrowLeft` `ArrowUpRight` `ChevronDown` `ChevronLeft` `ChevronRight` `Menu` |
+| **Actions**       | `Plus` `Pencil` `Trash` `Check` `X` `Upload` `Filter` `SortAsc` `Search` `Dots`                    |
+| **Objects**       | `Grid` `Users` `User` `Layers` `Document` `Clipboard` `Folder` `Tag` `Calendar` `ChartLine`        |
+| **Status & misc** | `Bell` `Lock` `Logout` `Eye` `Globe` `Mail` `Phone` `Sparkles` `Gear`                              |
 
 ```tsx
 import { Users } from "@/components/shared/icons";
@@ -622,6 +636,28 @@ export default function MembersListPage() {
 ```
 
 ---
+
+## Keeping layouts responsive
+
+Every page was checked from 320px to 1440px with nothing spilling out of its box, nothing cut
+off, and no sideways scrolling. These five rules keep it that way. Each one fixes a bug that
+was actually found:
+
+1. **A grid needs a phone default.** Write `grid grid-cols-1 lg:grid-cols-12`, not
+   `grid lg:grid-cols-12`. Without `grid-cols-1`, the single phone column grows to fit its
+   widest content and pushes the whole page sideways.
+2. **A row with `justify-between` needs `flex-wrap`.** Otherwise the button on the right
+   spills out of the card instead of dropping to the next line.
+3. **Don't `truncate` names or titles.** Let them wrap (`break-words`). Truncating is only
+   right where the container scrolls, like a `DataTable` cell.
+4. **Icons in a flex row need `shrink-0`**, or they get squashed when the text next to them
+   is long.
+5. **For "N tiles in a row", prefer a grid that fits as many as it can** over a fixed count:
+   `grid-cols-[repeat(auto-fit,minmax(6rem,1fr))]`. It adapts to the container, not the
+   screen, so it works inside narrow cards too.
+
+Tables and filter chips are the exception: they scroll sideways **inside their own card** on
+small screens, on purpose. The page itself never should.
 
 ## Gotchas
 

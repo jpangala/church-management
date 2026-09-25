@@ -147,7 +147,7 @@ export default function AdminDashboard() {
 
       {/* HERO */}
       <RevealOnView className="mt-6">
-        <div className="grid gap-6 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <Eyebrow tone="primary">Sesi Aktif</Eyebrow>
             <h1 className="mt-4 font-editorial text-[44px] leading-[1.05] tracking-[-0.025em] text-balance sm:text-[56px]">
@@ -173,7 +173,7 @@ export default function AdminDashboard() {
           <div className="lg:col-span-4">
             <Panel tone="champagne" inset="p-6">
               <Eyebrow tone="accent">System Health</Eyebrow>
-              <div className="mt-5 grid grid-cols-3 gap-3">
+              <div className="mt-5 grid grid-cols-[repeat(auto-fit,minmax(5.5rem,1fr))] gap-3">
                 {[
                   { v: "99.9%", l: "Uptime" },
                   { v: "84ms", l: "API" },
@@ -204,7 +204,7 @@ export default function AdminDashboard() {
 
       {/* KPI ROW */}
       <RevealOnView delay={120} className="mt-10">
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {STATS.map((s) => (
             <StatCard key={s.label} {...s} />
           ))}
@@ -213,11 +213,11 @@ export default function AdminDashboard() {
 
       {/* BENTO ROW 1 */}
       <RevealOnView delay={180} className="mt-6">
-        <div className="grid gap-4 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           {/* Activity feed */}
           <div className="lg:col-span-8">
             <Panel>
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <Eyebrow>Live Activity</Eyebrow>
                   <h2 className="mt-3 font-editorial text-2xl tracking-[-0.015em] text-foreground">
@@ -228,7 +228,7 @@ export default function AdminDashboard() {
                   </p>
                 </div>
                 <button
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-foreground/[0.04] text-foreground/70 ring-1 ring-inset ring-foreground/[0.06]"
+                  className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-foreground/[0.04] text-foreground/70 ring-1 ring-inset ring-foreground/[0.06]"
                   aria-label="More options"
                 >
                   <Dots width={14} height={14} />
@@ -320,11 +320,11 @@ export default function AdminDashboard() {
 
       {/* BENTO ROW 2 */}
       <RevealOnView delay={220} className="mt-4">
-        <div className="grid gap-4 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           {/* Recent members */}
           <div className="lg:col-span-7">
             <Panel>
-              <div className="flex items-center justify-between">
+              <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
                 <div>
                   <Eyebrow>Recently Joined</Eyebrow>
                   <h2 className="mt-3 font-editorial text-2xl tracking-[-0.015em]">
@@ -347,14 +347,14 @@ export default function AdminDashboard() {
                       key={m.name}
                       className="flex items-center gap-4 rounded-2xl bg-foreground/[0.02] px-3 py-3 ring-1 ring-inset ring-foreground/[0.05]"
                     >
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-primary/90 font-editorial text-[13px] font-medium text-primary-foreground shadow-soft-glow">
+                      <span className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/90 font-editorial text-[13px] font-medium text-primary-foreground shadow-soft-glow">
                         {initials}
                       </span>
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-medium text-foreground">
+                        <p className="break-words text-sm font-medium text-foreground">
                           {m.name}
                         </p>
-                        <p className="truncate text-[12px] text-muted-foreground">
+                        <p className="break-words text-[12px] text-muted-foreground">
                           {m.role}
                         </p>
                       </div>

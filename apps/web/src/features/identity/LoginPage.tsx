@@ -48,7 +48,7 @@ export default function LoginPage() {
   return (
     <div className="min-h-full bg-background">
       <header className="border-b border-border bg-surface">
-        <div className="container flex items-center justify-between py-4">
+        <div className="container flex flex-wrap items-center justify-between py-4 gap-x-3 gap-y-1">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-md bg-primary" aria-hidden />
             <span className="font-display text-xl text-primary">

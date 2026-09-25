@@ -160,7 +160,7 @@ export default function DivisionDashboard() {
 
       {/* HERO */}
       <RevealOnView className="mt-6">
-        <div className="grid gap-6 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Eyebrow tone="primary">Divisi Musik · Periode aktif</Eyebrow>
             <h1 className="mt-4 font-editorial text-[44px] leading-[1.05] tracking-[-0.025em] text-balance sm:text-[56px]">
@@ -193,19 +193,19 @@ export default function DivisionDashboard() {
               </p>
               <div className="mt-4 hairline" />
               <ul className="mt-4 space-y-2.5 text-[13px] text-foreground/85">
-                <li className="flex justify-between gap-4">
+                <li className="flex flex-wrap justify-between gap-4">
                   <span className="text-muted-foreground">Tanggal</span>
                   <span className="tabular-nums">Sab, 21 Jun 2026</span>
                 </li>
-                <li className="flex justify-between gap-4">
+                <li className="flex flex-wrap justify-between gap-4">
                   <span className="text-muted-foreground">Waktu</span>
                   <span className="tabular-nums">18:00 — 21:00 WIB</span>
                 </li>
-                <li className="flex justify-between gap-4">
+                <li className="flex flex-wrap justify-between gap-4">
                   <span className="text-muted-foreground">Ruangan</span>
                   <span>Aula Utama</span>
                 </li>
-                <li className="flex justify-between gap-4">
+                <li className="flex flex-wrap justify-between gap-4">
                   <span className="text-muted-foreground">Status</span>
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-warning/15 px-2 py-0.5 text-[10px] font-medium uppercase tracking-[0.18em] text-warning ring-1 ring-inset ring-warning/30">
                     Menunggu
@@ -224,7 +224,7 @@ export default function DivisionDashboard() {
 
       {/* KPIs */}
       <RevealOnView delay={120} className="mt-10">
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {STATS.map((s) => (
             <StatCard key={s.label} {...s} />
           ))}
@@ -254,7 +254,7 @@ export default function DivisionDashboard() {
               <li key={p.title} className="snap-start shrink-0 basis-[19rem]">
                 <div className="rounded-[1.5rem] bg-foreground/[0.035] p-[5px] ring-1 ring-inset ring-foreground/[0.05] shadow-soft-lift transition-transform duration-700 ease-spring-soft hover:-translate-y-1">
                   <div className="rounded-[calc(1.5rem-5px)] bg-surface p-5 shadow-inner-hairline">
-                    <div className="flex items-start justify-between gap-3">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
                       <span
                         className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.2em] ring-1 ring-inset ${STATUS_TONE[p.status]}`}
                       >
@@ -277,7 +277,7 @@ export default function DivisionDashboard() {
 
                     {/* Progress */}
                     <div className="mt-5">
-                      <div className="flex items-baseline justify-between">
+                      <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
                         <span className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
                           Progress
                         </span>
@@ -294,7 +294,7 @@ export default function DivisionDashboard() {
                     </div>
 
                     {/* Avatars */}
-                    <div className="mt-5 flex items-center justify-between">
+                    <div className="mt-5 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
                       <div className="flex -space-x-2">
                         {Array.from({ length: Math.min(p.members, 4) }).map(
                           (_, k) => (
@@ -330,10 +330,10 @@ export default function DivisionDashboard() {
 
       {/* BOOKINGS + TEAM */}
       <RevealOnView delay={220} className="mt-4">
-        <div className="grid gap-4 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Panel>
-              <div className="flex items-end justify-between gap-3">
+              <div className="flex flex-wrap items-end justify-between gap-3">
                 <div>
                   <Eyebrow>Bookings</Eyebrow>
                   <h2 className="mt-3 font-editorial text-2xl tracking-[-0.015em]">
@@ -359,10 +359,10 @@ export default function DivisionDashboard() {
                       </span>
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-sm font-medium text-foreground">
+                      <p className="break-words text-sm font-medium text-foreground">
                         {b.purpose}
                       </p>
-                      <p className="truncate text-[12px] text-muted-foreground">
+                      <p className="break-words text-[12px] text-muted-foreground">
                         {b.when} · {b.room}
                       </p>
                     </div>
@@ -380,7 +380,7 @@ export default function DivisionDashboard() {
           {/* Team */}
           <div className="lg:col-span-5">
             <Panel>
-              <div className="flex items-end justify-between gap-3">
+              <div className="flex flex-wrap items-end justify-between gap-3">
                 <div>
                   <Eyebrow>Tim</Eyebrow>
                   <h2 className="mt-3 font-editorial text-2xl tracking-[-0.015em]">
@@ -391,7 +391,7 @@ export default function DivisionDashboard() {
                   Semua
                 </IslandButton>
               </div>
-              <ul className="mt-6 grid grid-cols-2 gap-3">
+              <ul className="mt-6 grid grid-cols-[repeat(auto-fit,minmax(11rem,1fr))] gap-3">
                 {TEAM.map((m) => {
                   const initials = m.name
                     .split(" ")
@@ -407,10 +407,10 @@ export default function DivisionDashboard() {
                         {initials}
                       </span>
                       <div className="min-w-0">
-                        <p className="truncate text-[12px] font-medium text-foreground">
+                        <p className="break-words text-[12px] font-medium text-foreground">
                           {m.name}
                         </p>
-                        <p className="truncate text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
+                        <p className="break-words text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                           {m.role}
                         </p>
                       </div>

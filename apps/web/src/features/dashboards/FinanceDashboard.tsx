@@ -230,7 +230,7 @@ export default function FinanceDashboard() {
 
       {/* HERO */}
       <RevealOnView className="mt-6">
-        <div className="grid gap-6 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
           <div className="lg:col-span-7">
             <Eyebrow tone="primary">Closing periode · Juni</Eyebrow>
             <h1 className="mt-4 font-editorial text-[44px] leading-[1.05] tracking-[-0.025em] text-balance sm:text-[56px]">
@@ -255,7 +255,7 @@ export default function FinanceDashboard() {
           {/* Reserve card */}
           <div className="lg:col-span-5">
             <Panel tone="espresso" inset="p-7">
-              <div className="flex items-start justify-between gap-4">
+              <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <Eyebrow tone="accent">Reserve · Endowment</Eyebrow>
                   <p className="mt-5 font-editorial text-5xl font-light leading-none tracking-[-0.02em] text-white">
@@ -265,7 +265,7 @@ export default function FinanceDashboard() {
                     Cadangan terlindungi, target 6 bulan operasi. Tercapai 74%.
                   </p>
                 </div>
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/[0.08] text-white/85 ring-1 ring-inset ring-white/10">
+                <span className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white/[0.08] text-white/85 ring-1 ring-inset ring-white/10">
                   <Sparkles width={15} height={15} />
                 </span>
               </div>
@@ -275,7 +275,7 @@ export default function FinanceDashboard() {
                   style={{ width: "74%" }}
                 />
               </div>
-              <div className="mt-5 flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-white/55">
+              <div className="mt-5 flex flex-wrap items-center justify-between text-[11px] uppercase tracking-[0.18em] text-white/55 gap-x-3 gap-y-1">
                 <span>Target Rp 420M</span>
                 <span>74% · +2.1% MoM</span>
               </div>
@@ -286,7 +286,7 @@ export default function FinanceDashboard() {
 
       {/* KPI ROW */}
       <RevealOnView delay={120} className="mt-10">
-        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {STATS.map((s) => (
             <StatCard key={s.label} {...s} />
           ))}
@@ -295,7 +295,7 @@ export default function FinanceDashboard() {
 
       {/* CHART + TRANSACTIONS */}
       <RevealOnView delay={180} className="mt-6">
-        <div className="grid gap-4 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           <div className="lg:col-span-8">
             <Panel>
               <div className="flex flex-wrap items-start justify-between gap-4">
@@ -324,7 +324,7 @@ export default function FinanceDashboard() {
                 <IncomeExpenseChart />
               </div>
 
-              <div className="mt-2 grid grid-cols-3 gap-3 border-t border-foreground/[0.05] pt-5">
+              <div className="mt-2 grid grid-cols-[repeat(auto-fit,minmax(6.5rem,1fr))] gap-3 border-t border-foreground/[0.05] pt-5">
                 {[
                   { l: "Income YTD", v: "Rp 482M" },
                   { l: "Expense YTD", v: "Rp 364M" },
@@ -345,7 +345,7 @@ export default function FinanceDashboard() {
 
           <div className="lg:col-span-4">
             <Panel>
-              <div className="flex items-start justify-between gap-3">
+              <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <Eyebrow>Transaksi</Eyebrow>
                   <h2 className="mt-3 font-editorial text-2xl tracking-[-0.015em]">
@@ -363,7 +363,7 @@ export default function FinanceDashboard() {
                     className="flex items-center gap-3 rounded-2xl bg-foreground/[0.02] px-3 py-3 ring-1 ring-inset ring-foreground/[0.05]"
                   >
                     <span
-                      className={`inline-flex h-9 w-9 items-center justify-center rounded-full ring-1 ring-inset ${
+                      className={`inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full ring-1 ring-inset ${
                         t.type === "in"
                           ? "bg-success/10 text-success ring-success/20"
                           : "bg-destructive/10 text-destructive ring-destructive/20"
@@ -376,10 +376,10 @@ export default function FinanceDashboard() {
                       )}
                     </span>
                     <div className="min-w-0 flex-1">
-                      <p className="truncate text-[13px] font-medium text-foreground">
+                      <p className="break-words text-[13px] font-medium text-foreground">
                         {t.label}
                       </p>
-                      <p className="truncate text-[11px] text-muted-foreground">
+                      <p className="break-words text-[11px] text-muted-foreground">
                         {t.division} · {t.when}
                       </p>
                     </div>
@@ -420,14 +420,14 @@ export default function FinanceDashboard() {
             </IslandButton>
           </div>
 
-          <ul className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+          <ul className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
             {BUDGETS.map((b) => (
               <li
                 key={b.name}
                 className="rounded-[1.25rem] bg-foreground/[0.025] p-[5px] ring-1 ring-inset ring-foreground/[0.05]"
               >
                 <div className="rounded-[calc(1.25rem-5px)] bg-surface p-4 shadow-inner-hairline">
-                  <div className="flex items-center justify-between gap-3">
+                  <div className="flex flex-wrap items-center justify-between gap-3">
                     <p className="text-[13px] font-medium text-foreground">
                       {b.name}
                     </p>

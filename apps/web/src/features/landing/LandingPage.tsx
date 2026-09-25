@@ -11,21 +11,24 @@ export default function LandingPage() {
   return (
     <div className="min-h-full">
       <header className="border-b border-border bg-surface">
-        <div className="container flex items-center justify-between py-4">
+        <div className="container flex flex-wrap items-center justify-between gap-x-6 gap-y-3 py-4">
           <div className="flex items-center gap-3">
             <div className="h-10 w-10 rounded-md bg-primary" aria-hidden />
             <span className="font-display text-xl text-primary">
               Gereja XYZ
             </span>
           </div>
-          <nav className="flex items-center gap-6 text-sm">
-            <a href="#about" className="hover:text-primary">
+          <nav className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm sm:gap-x-6">
+            <a href="#about" className="hidden hover:text-primary sm:inline">
               {t("nav.profile")}
             </a>
-            <a href="#divisions" className="hover:text-primary">
+            <a
+              href="#divisions"
+              className="hidden hover:text-primary sm:inline"
+            >
               {t("nav.divisions")}
             </a>
-            <a href="#timeline" className="hover:text-primary">
+            <a href="#timeline" className="hidden hover:text-primary sm:inline">
               {t("nav.timeline")}
             </a>
             <button
