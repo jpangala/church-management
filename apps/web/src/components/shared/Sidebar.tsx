@@ -1,5 +1,7 @@
-import { NavLink } from "react-router-dom";
-import { Globe } from "./icons";
+import { useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
+import { Globe, X } from "./icons";
+import { useMobileNav } from "./mobileNav";
 import { navFor } from "@/app/navigation";
 import type { Role } from "@church/shared";
 
@@ -20,99 +22,163 @@ interface Props {
 }
 
 export default function Sidebar({ role }: Props) {
+  const nav = useMobileNav();
+  const { pathname } = useLocation();
+  const open = nav?.open ?? false;
+  // useState setters are stable, so this is safe to depend on.
+  const setOpen = nav?.setOpen;
+  const close = () => setOpen?.(false);
+
+  // Close the drawer after navigating.
+  useEffect(() => {
+    setOpen?.(false);
+  }, [pathname, setOpen]);
+
+  // While open: Escape closes it, and the page behind it doesn't scroll.
+  useEffect(() => {
+    if (!open || !setOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [open, setOpen]);
+
   return (
-    <aside className="hidden md:block sticky top-6 h-[calc(100dvh-3rem)] w-72 shrink-0 px-3 pl-6 py-6">
-      <div className="relative h-full rounded-[2rem] bg-foreground/[0.035] p-[6px] ring-1 ring-inset ring-foreground/[0.06] shadow-soft-lift">
-        <div className="flex h-full flex-col rounded-[calc(2rem-6px)] bg-surface/85 backdrop-blur-md shadow-inner-hairline">
-          {/* Brandmark */}
-          <div className="flex items-center gap-3 px-6 pt-6">
-            <span
-              className="relative inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-soft-glow"
-              aria-hidden
-            >
-              <span className="font-editorial text-xl font-medium leading-none">
-                G
-              </span>
-              <span className="absolute -bottom-1 -right-1 h-2.5 w-2.5 rounded-full bg-accent ring-2 ring-surface" />
-            </span>
-            <div className="leading-tight">
-              <p className="font-editorial text-[15px] font-medium text-foreground">
-                Gereja XYZ
-              </p>
-              <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-                {ROLE_TITLE[role]}
-              </p>
-            </div>
+    <>
+      <aside className="hidden md:block sticky top-6 h-[calc(100dvh-3rem)] w-72 shrink-0 px-3 pl-6 py-6">
+        <SidebarPanel role={role} />
+      </aside>
+
+      {open && (
+        <div
+          className="fixed inset-0 z-50 md:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Navigation"
+        >
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={close}
+            className="absolute inset-0 bg-foreground/25 backdrop-blur-sm"
+          />
+          <div className="relative h-full w-[min(18rem,85vw)] p-3">
+            <SidebarPanel role={role} onClose={close} />
           </div>
+        </div>
+      )}
+    </>
+  );
+}
 
-          <div className="mx-6 mt-5 hairline" />
+function SidebarPanel({ role, onClose }: Props & { onClose?: () => void }) {
+  return (
+    <div className="relative h-full rounded-[2rem] bg-foreground/[0.035] p-[6px] ring-1 ring-inset ring-foreground/[0.06] shadow-soft-lift">
+      <div className="flex h-full flex-col rounded-[calc(2rem-6px)] bg-surface/85 backdrop-blur-md shadow-inner-hairline">
+        {/* Brandmark */}
+        <div className="flex items-center gap-3 px-6 pt-6">
+          <span
+            className="relative inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-soft-glow"
+            aria-hidden
+          >
+            <span className="font-editorial text-xl font-medium leading-none">
+              G
+            </span>
+            <span className="absolute -bottom-1 -right-1 h-2.5 w-2.5 rounded-full bg-accent ring-2 ring-surface" />
+          </span>
+          <div className="leading-tight">
+            <p className="font-editorial text-[15px] font-medium text-foreground">
+              Gereja XYZ
+            </p>
+            <p className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+              {ROLE_TITLE[role]}
+            </p>
+          </div>
+          {onClose && (
+            <button
+              type="button"
+              onClick={onClose}
+              aria-label="Close menu"
+              className="ml-auto inline-flex h-9 w-9 items-center justify-center rounded-full bg-foreground/[0.04] text-foreground/70 ring-1 ring-inset ring-foreground/[0.06]"
+            >
+              <X width={14} height={14} />
+            </button>
+          )}
+        </div>
 
-          <p className="px-6 pt-4 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
-            {ROLE_SUBTITLE[role]}
-          </p>
+        <div className="mx-6 mt-5 hairline" />
 
-          {/* Nav */}
-          <nav className="mt-4 flex-1 space-y-6 overflow-y-auto px-3 pb-4">
-            {navFor(role).map((group) => (
-              <div key={group.section}>
-                <p className="px-3 pb-2 text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70">
-                  {group.section}
-                </p>
-                <ul className="space-y-1">
-                  {group.items.map((item) => (
-                    <li key={item.to}>
-                      <NavLink
-                        to={item.to}
-                        end={item.to === `/${role.toLowerCase().split("_")[0]}`}
-                        className={({ isActive }) =>
-                          `group relative flex items-center gap-3 rounded-full px-3 py-2 text-sm transition-all duration-500 ease-spring-out ${
-                            isActive
-                              ? "bg-primary text-primary-foreground shadow-soft-glow ring-1 ring-inset ring-white/10"
-                              : "text-foreground/70 hover:bg-foreground/[0.04] hover:text-foreground"
-                          }`
-                        }
-                      >
-                        {({ isActive }) => (
-                          <>
-                            <span
-                              className={`inline-flex h-7 w-7 items-center justify-center rounded-full transition-colors duration-500 ease-spring-out ${
-                                isActive
-                                  ? "bg-white/15 text-white"
-                                  : "bg-foreground/[0.04] text-foreground/70 group-hover:bg-foreground/[0.07]"
-                              }`}
-                              aria-hidden
-                            >
-                              {item.icon}
-                            </span>
-                            <span className="tracking-[-0.005em]">
-                              {item.label}
-                            </span>
-                          </>
-                        )}
-                      </NavLink>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </nav>
+        <p className="px-6 pt-4 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+          {ROLE_SUBTITLE[role]}
+        </p>
 
-          {/* Footer card */}
-          <div className="m-3 mt-2 rounded-[1.25rem] bg-foreground/[0.04] p-[5px] ring-1 ring-inset ring-foreground/[0.05]">
-            <div className="rounded-[calc(1.25rem-5px)] bg-surface p-4 shadow-inner-hairline">
-              <div className="flex items-center gap-2 text-foreground/70">
-                <Globe width={14} height={14} />
-                <span className="text-[10px] uppercase tracking-[0.22em]">
-                  Locale ID · EN
-                </span>
-              </div>
-              <p className="mt-2 font-editorial text-sm leading-snug text-foreground">
-                Bilingual UI siap. Tekan toggle di header.
+        {/* Nav */}
+        <nav className="mt-4 flex-1 space-y-6 overflow-y-auto px-3 pb-4">
+          {navFor(role).map((group) => (
+            <div key={group.section}>
+              <p className="px-3 pb-2 text-[10px] uppercase tracking-[0.22em] text-muted-foreground/70">
+                {group.section}
               </p>
+              <ul className="space-y-1">
+                {group.items.map((item) => (
+                  <li key={item.to}>
+                    <NavLink
+                      to={item.to}
+                      end={item.to === `/${role.toLowerCase().split("_")[0]}`}
+                      className={({ isActive }) =>
+                        `group relative flex items-center gap-3 rounded-full px-3 py-2 text-sm transition-all duration-500 ease-spring-out ${
+                          isActive
+                            ? "bg-primary text-primary-foreground shadow-soft-glow ring-1 ring-inset ring-white/10"
+                            : "text-foreground/70 hover:bg-foreground/[0.04] hover:text-foreground"
+                        }`
+                      }
+                    >
+                      {({ isActive }) => (
+                        <>
+                          <span
+                            className={`inline-flex h-7 w-7 items-center justify-center rounded-full transition-colors duration-500 ease-spring-out ${
+                              isActive
+                                ? "bg-white/15 text-white"
+                                : "bg-foreground/[0.04] text-foreground/70 group-hover:bg-foreground/[0.07]"
+                            }`}
+                            aria-hidden
+                          >
+                            {item.icon}
+                          </span>
+                          <span className="tracking-[-0.005em]">
+                            {item.label}
+                          </span>
+                        </>
+                      )}
+                    </NavLink>
+                  </li>
+                ))}
+              </ul>
             </div>
+          ))}
+        </nav>
+
+        {/* Footer card */}
+        <div className="m-3 mt-2 rounded-[1.25rem] bg-foreground/[0.04] p-[5px] ring-1 ring-inset ring-foreground/[0.05]">
+          <div className="rounded-[calc(1.25rem-5px)] bg-surface p-4 shadow-inner-hairline">
+            <div className="flex items-center gap-2 text-foreground/70">
+              <Globe width={14} height={14} />
+              <span className="text-[10px] uppercase tracking-[0.22em]">
+                Locale ID · EN
+              </span>
+            </div>
+            <p className="mt-2 font-editorial text-sm leading-snug text-foreground">
+              Bilingual UI siap. Tekan toggle di header.
+            </p>
           </div>
         </div>
       </div>
-    </aside>
+    </div>
   );
 }

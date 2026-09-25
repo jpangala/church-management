@@ -26,9 +26,16 @@ export default function RadioCardGroup({
   options,
   columns = 2,
 }: Props) {
-  const cols = { 1: "grid-cols-1", 2: "sm:grid-cols-2", 3: "sm:grid-cols-3" };
+  // `columns` is a maximum. Cards never get narrower than 13rem: when the
+  // container can't fit that many, they reflow onto more rows. Sized by the
+  // container rather than the screen, so it works in narrow form columns too.
+  const gridTemplateColumns = `repeat(auto-fit, minmax(min(100%, max(13rem, calc((100% - ${columns - 1} * 0.75rem) / ${columns}))), 1fr))`;
   return (
-    <div className={`grid gap-3 ${cols[columns]}`} role="radiogroup">
+    <div
+      className="grid gap-3"
+      style={{ gridTemplateColumns }}
+      role="radiogroup"
+    >
       {options.map((o) => {
         const isActive = value === o.value;
         return (
@@ -60,11 +67,11 @@ export default function RadioCardGroup({
               </span>
             )}
             <div className="min-w-0 flex-1">
-              <p className="text-[13px] font-medium text-foreground">
+              <p className="break-words text-[13px] font-medium text-foreground">
                 {o.label}
               </p>
               {o.description && (
-                <p className="mt-0.5 text-[12px] leading-relaxed text-muted-foreground">
+                <p className="mt-0.5 break-words text-[12px] leading-relaxed text-muted-foreground">
                   {o.description}
                 </p>
               )}
