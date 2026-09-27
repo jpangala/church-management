@@ -1,0 +1,4 @@
+# Store and check out text files with LF line endings on every OS, so a
+# Windows editor can't turn a small edit into a whole-file line-ending diff.
+# Git detects binary files (images, fonts) itself and leaves them alone.
+* text=auto eol=lf

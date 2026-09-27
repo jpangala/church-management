@@ -3,6 +3,9 @@
 Welcome. This assumes you've never used Git or GitHub before — every step is spelled out.
 If you already know Git, skim the bold headers and jump to whatever's new to you.
 
+> **On Windows?** Sections 2–6 below are for Macs. Follow [`WINDOWS_SETUP.md`](WINDOWS_SETUP.md)
+> instead, then come back here for section 7 onwards.
+
 You should have already received a GitHub invite email for **jpangala/church-management**.
 If not, ask the repo lead to send it before continuing.
 
@@ -49,6 +52,7 @@ Skip this if you've used Git before.
 ## 2. Install the tools
 
 Install these in order. All commands go in your terminal (macOS: Terminal or iTerm).
+**On Windows, use [`WINDOWS_SETUP.md`](WINDOWS_SETUP.md) for this section through section 6.**
 
 ### 2.1 Git
 
@@ -328,6 +332,7 @@ git push -u origin feat/<domain>-<short-description>
 | --------------------------------------------- | -------------------------------------------------------------------------------------------------- |
 | [`README.md`](../README.md)                   | Stack overview, full script list                                                                   |
 | [`CONTRIBUTING.md`](../CONTRIBUTING.md)       | Branch/commit conventions, folder map, lint rules, test conventions                                |
+| [`docs/WINDOWS_SETUP.md`](WINDOWS_SETUP.md)   | Sections 2–6 of this guide, for Windows                                                            |
 | [`docs/GIT_REFERENCE.md`](GIT_REFERENCE.md)   | Every Git/GitHub word and command explained, with examples and a cheat sheet                       |
 | [`docs/UI_KIT.md`](UI_KIT.md)                 | The 22 shared UI components: props, examples, gotchas, responsive rules                            |
 | [`docs/PRACTICE_DRILL.md`](PRACTICE_DRILL.md) | A 2–3 hour practice feature: uses every UI component, and walks you through breaking and fixing CI |

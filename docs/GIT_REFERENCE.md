@@ -425,7 +425,8 @@ a force-push costs the team an afternoon.
 ## Part 7 — The `gh` CLI
 
 GitHub's official command line tool. Optional, but it saves a lot of browser round-trips.
-Install with `brew install gh`, then `gh auth login` once.
+Install with `brew install gh` on a Mac, or `winget install --id GitHub.cli -e` on Windows, then
+`gh auth login` once.
 
 ```bash
 gh pr create --base dev --fill
