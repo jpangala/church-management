@@ -1000,7 +1000,8 @@ export default function AnnouncementFormPage() {
 
 ## 8. Check it on a phone-sized screen
 
-In Chrome, open DevTools (`Cmd+Option+I`), turn on the device toolbar (`Cmd+Shift+M`), and pick
+In Chrome, open DevTools (`Cmd+Option+I` on a Mac, `F12` on Windows), turn on the device
+toolbar (`Cmd+Shift+M` on a Mac, `Ctrl+Shift+M` on Windows), and pick
 a width of **375**. Check both pages:
 
 - Nothing spills out of its card, and nothing is cut off.

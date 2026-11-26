@@ -28,6 +28,8 @@ Web platform for managing a church: public landing page + role-based dashboards 
 
 Prerequisites: Node 22 (`nvm use`), pnpm 9, PostgreSQL 16 running locally.
 
+The steps below are for macOS. **On Windows, follow [`docs/WINDOWS_SETUP.md`](docs/WINDOWS_SETUP.md).**
+
 ```bash
 # 1. Install deps
 pnpm install

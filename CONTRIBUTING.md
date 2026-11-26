@@ -2,7 +2,8 @@
 
 ## Prerequisites
 
-- Node 22 (`nvm use` reads `.nvmrc`)
+- Node 22 (`nvm use` reads `.nvmrc` on a Mac; nvm for Windows doesn't, so run `nvm use 22`.
+  Full Windows steps: [`docs/WINDOWS_SETUP.md`](docs/WINDOWS_SETUP.md))
 - pnpm 9 (`corepack enable`)
 - PostgreSQL 16 running locally
 
